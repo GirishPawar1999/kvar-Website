@@ -1,0 +1,507 @@
+extends ./header.pug
+block content
+ style.
+   .navbar .megamenu{ padding: 1rem; }
+   /* ============ desktop view ============ */
+   @media all and (min-width: 992px) {
+   .navbar .has-megamenu{position:static!important;}
+   .navbar .megamenu{left:-159%; right:0; width:289%; margin-top:50px;  }
+   }
+   /* ============ desktop view .end// ============ */
+   /* ============ mobile view ============ */
+   @media(max-width: 991px){
+   .navbar.fixed-top .navbar-collapse, .navbar.sticky-top .navbar-collapse{
+   overflow-y: auto;
+   max-height: 90vh;
+   margin-top:15px;
+   }
+   }
+   /* ============ mobile view .end// ============ */
+ // ======= Hero Section =======
+ br
+ br
+ br
+ br
+ section#hero
+   #heroCarousel.carousel.slide.carousel-fade(data-bs-interval='5000' data-bs-ride='carousel')
+     .carousel-inner(role='listbox')
+       // Slide 1
+       .carousel-item.active(style='background-image: url(/public/assets/img/KVAR_Website_BG-03.png);')
+         .carousel-container
+           .container
+             .row
+               .col-lg-8.d-flex.flex-column.justify-content-center
+                 h1(data-aos='fade-up') Increase your
+                 h1(data-aos='fade-up') projects efficiency
+                 h1(data-aos='fade-up') and your profitability
+                 div(data-aos='fade-up' data-aos-delay='600')
+               .col-lg-4.hero-img(data-aos='zoom-out' data-aos-delay='200')
+                 img.img-fluid(src='/public/assets/img/pd1.png' alt='')
+       // Slide 2
+       .carousel-item(style='background-image: url(/public/assets/img/KVAR_website_bg2.png);')
+         .carousel-container
+           .container
+             .row
+               .col-lg-8.d-flex.flex-column.justify-content-center
+                 h1(data-aos='fade-up') Digital Solutions
+                 h1(data-aos='fade-up') that give you
+                 h1(data-aos='fade-up') Peace-of-mind
+                 div(data-aos='fade-up' data-aos-delay='600')
+               .col-lg-3.hero-img(data-aos='zoom-out' data-aos-delay='200')
+                 img.img-fluid(src='/public/assets/img/Ampere_3.jpg' alt='')
+       // Slide 3
+       .carousel-item(style='background-image: url(/public/assets/img/bgg1.png);')
+         .carousel-container
+           .container
+             .row
+               .col-lg-8.d-flex.flex-column.justify-content-center
+                 h1(data-aos='fade-up') Synchronised Precision
+                 h1(data-aos='fade-up') & Accuracy for lifetime
+                 div(data-aos='fade-up' data-aos-delay='600')
+               .col-lg-4.hero-img(data-aos='zoom-out' data-aos-delay='200')
+                 img.img-fluid(src='/public/assets/img/features-2.png' alt='')
+     a.carousel-control-prev(href='#heroCarousel' role='button' data-bs-slide='prev')
+       span.carousel-control-prev-icon.bi.bi-chevron-left(aria-hidden='true')
+     a.carousel-control-next(href='#heroCarousel' role='button' data-bs-slide='next')
+       span.carousel-control-next-icon.bi.bi-chevron-right(aria-hidden='true')
+     ol#hero-carousel-indicators.carousel-indicators
+ // End Hero
+ style.
+   #hero {
+   width: 100%;
+   height: 65vh;
+   background-color: rgba(0, 0, 0, 0.8);
+   overflow: hidden;
+   position: relative;
+   }
+   #hero .carousel, #hero .carousel-inner, #hero .carousel-item, #hero .carousel-item::before {
+   background-size: cover;
+   background-position:center;
+   background-repeat: no-repeat;
+   position: absolute;
+   top: 0;
+   right: 0;
+   left: 0;
+   bottom: 0;
+   }
+   #hero .carousel-container {
+   display: flex;
+   align-items: flex-end;
+   justify-content: center;
+   position: absolute;
+   bottom: 40px;
+   top: 70px;
+   left: 55px;
+   right: 55px;
+   }
+   #hero .carousel-content {
+   background: rgba(4, 4, 4, 0.7);
+   padding: 20px;
+   color: #fff;
+   border-top: 5px solid #1bbd36;
+   }
+   #hero .carousel-content h2 {
+   color: #fff;
+   margin-bottom: 20px;
+   font-size: 28px;
+   font-weight: 700;
+   }
+   #hero .btn-get-started {
+   font-family: "Roboto", sans-serif;
+   font-weight: 500;
+   font-size: 14px;
+   letter-spacing: 1px;
+   display: inline-block;
+   padding: 12px 32px;
+   border-radius: 4px;
+   transition: 0.5s;
+   line-height: 1;
+   margin: 10px;
+   color: #fff;
+   -webkit-animation-delay: 0.8s;
+   animation-delay: 0.8s;
+   border: 2px solid #1bbd36;
+   }
+   #hero .btn-get-started:hover {
+   background: #1bbd36;
+   color: #fff;
+   text-decoration: none;
+   }
+   #hero .carousel-inner .carousel-item {
+   transition-property: opacity;
+   background-position: center top;
+   }
+   #hero .carousel-inner .carousel-item,
+   #hero .carousel-inner .active.carousel-item-start,
+   #hero .carousel-inner .active.carousel-item-end {
+   opacity: 0;
+   }
+   #hero .carousel-inner .active,
+   #hero .carousel-inner .carousel-item-next.carousel-item-start,
+   #hero .carousel-inner .carousel-item-prev.carousel-item-end {
+   opacity: 1;
+   transition: 0.5s;
+   }
+   #hero .carousel-inner .carousel-item-next,
+   #hero .carousel-inner .carousel-item-prev,
+   #hero .carousel-inner .active.carousel-item-start,
+   #hero .carousel-inner .active.carousel-item-end {
+   left: 0;
+   transform: translate3d(0, 0, 0);
+   }
+   #hero .carousel-control-next-icon, #hero .carousel-control-prev-icon {
+   background: none;
+   font-size: 30px;
+   line-height: 0;
+   width: auto;
+   height: auto;
+   background: rgba(255, 255, 255, 0.4);
+   border-radius: 50px;
+   transition: 0.3s;
+   color: rgba(255, 255, 255, 0.6);
+   width: 54px;
+   height: 54px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   }
+   #hero .carousel-control-next-icon:hover, #hero .carousel-control-prev-icon:hover {
+   background: rgba(255, 255, 255, 0.6);
+   color: rgba(255, 255, 255, 0.8);
+   }
+   #hero .carousel-indicators li {
+   cursor: pointer;
+   background: #fff;
+   overflow: hidden;
+   border: 0;
+   width: 12px;
+   height: 12px;
+   border-radius: 50px;
+   opacity: 0.6;
+   transition: 0.3s;
+   }
+   #hero .carousel-indicators li.active {
+   opacity: 1;
+   background: #1bbd36;
+   }
+   @media (min-width: 1024px) {
+   #hero .carousel-content {
+   width: 60%;
+   }
+   #hero .carousel-control-prev, #hero .carousel-control-next {
+   width: 5%;
+   }
+   }
+   @media (max-width: 992px) {
+   #hero {
+   height: 88vh;
+   }
+   #hero .carousel-container {
+   top: 58px;
+   }
+   #hero .carousel-content h2 {
+   margin-bottom: 15px;
+   font-size: 22px;
+   }
+   #hero .carousel-content p {
+   font-size: 15px;
+   }
+   }
+   @media (max-height: 500px) {
+   #hero {
+   height: 120vh;
+   }
+   }
+ main#main
+   // ======= Pricing Section / best sellers =======
+   section#pricing.pricing
+     header.section-header
+       p Our Best Sellers 
+     .container(data-aos='fade-up')
+       .row.gy-4(data-aos='fade-left')
+        -let count = 1
+        each product in bseller
+          .col-lg-3.col-md-6(data-aos='zoom-in' data-aos-delay='100')
+            .box.bseller
+              if count == 1
+                h3(style='color: #1f5ca9;') 
+                  = product.name
+              else if count == 2
+                h3(style='color: #1f5ca9;') 
+                  = product.name
+              else if count == 3
+                h3(style='color: #1f5ca9;') 
+                  = product.name
+              else 
+                h3(style='color: #1f5ca9;') 
+                  = product.name
+              img.img-fluid(src="/public/img/"+product.images[0].filename alt='')
+              ul
+                li 
+                  = product.description.substr(0, 150) + '...'
+                //li Nec feugiat nisl
+                //li Nulla at volutpat dola
+                //li.na Pharetra massa
+                //li.na Massa ultricies mi
+              a.btn-buy(href='/products/'+product._id) View Details
+          -count = count + 1
+
+   // End Pricing Section / best sellers
+   // ======= About Section =======
+   section#about.about
+     .container(data-aos='fade-up')
+       .row.gx-0
+         .col-lg-5.d-flex.flex-column.justify-content-center(data-aos='fade-up' data-aos-delay='200')
+           .content
+             h3 About Us
+             p
+               | KVAR Technologies is engaged in the design, development and manufacture of embedded / micro controller based products primarily for industrial applications.
+               | Having worked in this field for more than 35 years, we provide solutions for various control requirements in the process control industry. We manufacture electronic systems for automobile, industrial, medical, infrastructure and telecommunication applications.
+             .text-center.text-lg-start
+               a.btn-read-more.d-inline-flex.align-items-center.justify-content-center.align-self-center(href='/about')
+                 span Learn More
+                 i.bi.bi-arrow-right
+         .col-lg-7.d-flex.align-items-center(data-aos='zoom-out' data-aos-delay='200')
+           img.img-fluid(src='/public/assets/img/about.png' alt='')
+   // End About Section
+   // ======= Features Section / why us? =======
+   section#features.features
+     .container(data-aos='fade-up')
+       // Feature Icons
+       .row.feature-icons(data-aos='fade-up')
+         h3 Why us ?
+         .row
+           .col-xl-4.text-center(data-aos='fade-right' data-aos-delay='100')
+             img.img-fluid.p-4(src='/public/assets/img/Why Us-01.png' alt='')
+           .col-xl-8.d-flex.content
+             .row.align-self-center.gy-4
+               .col-md-6.icon-box(data-aos='fade-up')
+                 i.ri-service-fill
+                 div
+                   h4 Reliability
+               .col-md-6.icon-box(data-aos='fade-up' data-aos-delay='100')
+                 i.ri-stack-line
+                 div
+                   h4 Value-Conscious
+               .col-md-6.icon-box(data-aos='fade-up' data-aos-delay='200')
+                 i.ri-truck-fill
+                 div
+                   h4 Timely Delivery
+               .col-md-6.icon-box(data-aos='fade-up' data-aos-delay='300')
+                 i.ri-line-chart-line
+                 div
+                   h4 Pricing and ROI
+               .col-md-6.icon-box(data-aos='fade-up' data-aos-delay='400')
+                 i.ri-customer-service-fill
+                 div
+                   h4 Prompt Sales Assistance
+               .col-md-6.icon-box(data-aos='fade-up' data-aos-delay='500')
+                 i.ri-star-smile-fill
+                 div
+                   h4 Experience of over 35 years in the industry
+       // End Feature Icons
+   // End Features Section / why us?
+   // ======= Values Section / Quality policy=======
+   section#values.values
+     .container(data-aos='fade-up')
+       header.section-header
+         p Our Quality Policy
+       .row
+         .col-lg-4.col-md-6.portfolio-item.filter-app
+          .box
+            a.portfokio-lightbox(href='/public/assets/img/iso.png' data-gallery='portfolioGallery' title='ISO CERTIFICATION')
+             img.img-fluid(src='/public/assets/img/iso.png' alt='')
+                
+         .col-lg-4.col-md-6.portfolio-item.filter-app
+            .box
+             a.portfokio-lightbox(href='/public/assets/img/Quality Policy-01.png' data-gallery='portfolioGallery' title='QUALITY POLICY')
+              img.img-fluid(src='/public/assets/img/Quality Policy-01.png' alt='')
+         .col-lg-4.col-md-6.portfolio-item.filter-app
+           .box
+            a.portfokio-lightbox(href='/public/assets/img/MSME Certificate.png' data-gallery='portfolioGallery' title='MSME CERTIFICATION')
+             img.img-fluid(src='/public/assets/img/MSME Certificate.png' alt='')
+   // End Values Section / Quality policy
+   // ======= Clients Section =======
+   section#clients.clients
+     .container(data-aos='fade-up')
+       header.section-header
+         p Our Esteemed Clients
+       .clients-slider.swiper
+         .swiper-wrapper.align-items-center
+           .swiper-slide
+             img.img-fluid(src='/public/assets/img/clients/KVAR Client_Logos-01.png' alt='')
+           .swiper-slide
+             img.img-fluid(src='/public/assets/img/clients/KVAR Client_Logos-02.png' alt='')
+           .swiper-slide
+             img.img-fluid(src='/public/assets/img/clients/KVAR Client_Logos-03.png' alt='')
+           .swiper-slide
+             img.img-fluid(src='/public/assets/img/clients/KVAR Client_Logos-04.png' alt='')
+           .swiper-slide
+             img.img-fluid(src='/public/assets/img/clients/KVAR Client_Logos-05.png' alt='')
+           .swiper-slide
+             img.img-fluid(src='/public/assets/img/clients/KVAR Client_Logos-06.png' alt='')
+           .swiper-slide
+             img.img-fluid(src='/public/assets/img/clients/KVAR Client_Logos-07.png' alt='')
+           .swiper-slide
+             img.img-fluid(src='/public/assets/img/clients/KVAR Client_Logos-08.png' alt='')
+       br
+       br
+       .clients-slider.swiper
+         .swiper-wrapper.align-items-center
+           .swiper-slide
+             img.img-fluid(src='/public/assets/img/clients/KVAR Client_Logos-09.png' alt='')
+           .swiper-slide
+             img.img-fluid(src='/public/assets/img/clients/KVAR Client_Logos-10.png' alt='')
+           .swiper-slide
+             img.img-fluid(src='/public/assets/img/clients/KVAR Client_Logos-11.png' alt='')
+           .swiper-slide
+             img.img-fluid(src='/public/assets/img/clients/KVAR Client_Logos-12.png' alt='')
+           .swiper-slide
+             img.img-fluid(src='/public/assets/img/clients/KVAR Client_Logos-13.png' alt='')
+           .swiper-slide
+             img.img-fluid(src='/public/assets/img/clients/KVAR Client_Logos-14.png' alt='')
+           .swiper-slide
+             img.img-fluid(src='/public/assets/img/clients/KVAR Client_Logos-15.png' alt='')
+           .swiper-slide
+             img.img-fluid(src='/public/assets/img/clients/KVAR Client_Logos-16.png' alt='')
+         .swiper-pagination
+         br
+         header.section-header
+           h3
+             b Happy to serve the best in the industry
+   // End Clients Section
+   // ======= Portfolio Section / Product categories =======
+   section#portfolio.portfolio
+     .container(data-aos='fade-up')
+       header.section-header
+         p Our Product Categories
+       .row(data-aos='fade-up' data-aos-delay='100')
+         .col-lg-6.d-flex.justify-content-center
+       .row.gy-4.portfolio-container(data-aos='fade-up' data-aos-delay='200')
+        
+        -for(let i=0;i<length;i++){
+           .col-lg-4.col-md-6.portfolio-item.filter-app
+                a.portfolio-wrap(href="/category/"+categories[i]._id)
+                  img.img-fluid(src='/public/img/'+categories[i].images[0].filename alt='')
+        -}
+         
+   // End Portfolio Section /Product category
+   // ======= Testimonials Section =======
+   section#testimonials.testimonials
+     .container(data-aos='fade-up')
+       header.section-header
+         p What they are saying about us
+       .testimonials-slider.swiper(data-aos='fade-up' data-aos-delay='200')
+         .swiper-wrapper
+           .swiper-slide
+             .testimonial-item
+               .stars
+                 i.bi.bi-star-fill
+                 i.bi.bi-star-fill
+                 i.bi.bi-star-fill
+                 i.bi.bi-star-fill
+                 i.bi.bi-star-fill
+               p
+                 | Their high quality work is supported by their professional attitude, their supportive approach to product development is matched by their meticulous attention to detail, a really helpful partner to work with.
+                 | They have my sincerest thanks, would I recommend them&mldr; YES&mldr; an outstanding company!
+               .profile.mt-auto
+                 img.testimonial-img(src='/public/assets/img/testimonials/testimonials-1.png' alt='')
+                 h3 Andy Houston
+                 h4 Ceo &amp; Founder
+           // End testimonial item
+           .swiper-slide
+             .testimonial-item
+               .stars
+                 i.bi.bi-star-fill
+                 i.bi.bi-star-fill
+                 i.bi.bi-star-fill
+                 i.bi.bi-star-fill
+                 i.bi.bi-star-fill
+               p
+                 | This is to certify that we have been using data logger of KVAR Technologies from last 7+ years. The same has been performing well without any trouble till now and their sales and sevice is satisfactory.
+               .profile.mt-auto
+                 img.testimonial-img(src='../public/assets/img/airlift.jpeg' alt='')
+                 h3 Alex Mathew
+                 h4 Manager
+           // End testimonial item
+           .swiper-slide
+             .testimonial-item
+               .stars
+                 i.bi.bi-star-fill
+                 i.bi.bi-star-fill
+                 i.bi.bi-star-fill
+                 i.bi.bi-star-fill
+                 i.bi.bi-star-fill
+               p
+                 | This is to certify that we have purchased Watt hour logger from KVAR Technologies in July 2013 & it has been working satisfactorily. We are happy in recommending KVAR Technologies to any that ask, confident that they will experience the same satisfactory service that we have. Please feel free to contact us and when required.
+               .profile.mt-auto
+                 img.testimonial-img(src='../public/assets/img/izumi.png' alt='')
+                 h3 T.Asano
+                 h4 Techical Manager
+           // End testimonial item
+         .swiper-pagination
+   // End Testimonials Section
+   // ======= Team Section /Founders & CEO =======
+   section#team.team
+     .container(data-aos='fade-up')
+       header.section-header
+         p Our Leaders on the path to sucess
+       .row.gy-2
+         .col-lg-3.col-md-6.d-flex.align-items-center(data-aos='fade-up' data-aos-delay='100')
+           .member
+             .member-img
+               img.img-fluid(src='../public/assets/img/team/Rajesh.png' alt='')
+               .social
+                 a(href='https://www.linkedin.com/in/rajesh-doshi-aa71151/')
+                   i.bi.bi-linkedin
+             .member-info
+               br
+               h4 Rajesh Doshi
+               span Founder and CEO
+               p
+                 | Rajesh is an alumnus of College of Engineering, Pune. He completed his Masters from Indian Institute of Science in Electronic Designs from CEDT. He has twenty five years of experience in Electronics and Instrumentation industry
+               a.btn-buy(href='/about') Read More
+         .col-lg-3.col-md-6.d-flex.align-items-stretch(data-aos='fade-up' data-aos-delay='200')
+           .member
+             .member-img
+               img.img-fluid(src='/public/assets/img/team/Swapna.png' alt='')
+               .social
+                 a(href='https://www.linkedin.com/in/swapna-sankhe')
+                   i.bi.bi-linkedin
+             .member-info
+               br
+               h4 Swapna Karnik-Sankhe
+               span Co-Founder and CFO / COO
+               p
+                 | Swapna is a Canadian CPA, CMA from Wilfrid Laurier University. She has over twenty years of experience working in Multinationals abroad. While in Canada, she has also worked for the Canadian Government. Her specialization in Management
+               a.btn-buy(href='/about') Read More
+   // End Team Section / founder and ceo
+   // ======= Services Section / company's services =======
+   section#services.services
+     .container(data-aos='fade-up')
+       header.section-header
+         p Your one stop solution for all your digital display needs
+       .row.gy-4
+         .col-lg-3.col-md-3(data-aos='fade-up' data-aos-delay='200')
+           .service-box.orange
+             i.ri-file-ppt-2-fill.icon
+             a.btn-buy(href='/presentation')
+               h3 Company Presentation
+         .col-lg-3.col-md-3(data-aos='fade-up' data-aos-delay='300')
+           .service-box.red
+             i.ri-live-fill.icon
+             a.btn-buy(href='/galleryImages')
+               h3 Company Gallery
+         .col-lg-3.col-md-3(data-aos='fade-up' data-aos-delay='400')
+           .service-box.green
+             i.ri-folder-open-fill.icon
+             a.btn-buy(href='/brochures')
+               h3 Company Brochure
+         .col-lg-3.col-md-3(data-aos='fade-up' data-aos-delay='200')
+           .service-box.blue
+             i.ri-edit-2-fill.icon
+             a.btn-buy(href='/blogs')
+               h3 Company Blogs
+   // End Services Section / comapny services
+ // End #main
+ // ======= Footer =======

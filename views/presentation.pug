@@ -1,0 +1,50 @@
+extends ./header.pug
+block content
+ style.
+   .navbar .megamenu{ padding: 1rem; }
+   /* ============ desktop view ============ */
+   @media all and (min-width: 992px) {
+   .navbar .has-megamenu{position:static!important;}
+   .navbar .megamenu{left:-118%; right:0; width:235%; margin-top:27px;  }
+   }
+   /* ============ desktop view .end// ============ */
+   /* ============ mobile view ============ */
+   @media(max-width: 991px){
+   .navbar.fixed-top .navbar-collapse, .navbar.sticky-top .navbar-collapse{
+   overflow-y: auto;
+   max-height: 90vh;
+   margin-top:10px;
+   }
+   }
+   /* ============ mobile view .end// ============ */
+ main#main
+   // ======= Breadcrumbs =======
+   section.breadcrumbs
+     .container
+       ol
+         li
+           a(href='index.html') Home
+         li Company&apos;s Presentation
+       h2 Company&apos;s Presentation
+   // End Breadcrumbs
+   // About us
+   // ======= About Section =======
+   main
+     br
+     center
+        iframe(src='https://onedrive.live.com/embed?cid=9DD95A22E1BED245&resid=9DD95A22E1BED245%21611&authkey=AGuhzE4iQ-Xvc-Q&em=2&wdAr=1.3333333333333333' width='599px' height='487px' frameborder='0')
+          | This is an embedded 
+          a(target='_blank' href='https://office.com') Microsoft Office
+          |  presentation, powered by 
+          a(target='_blank' href='https://office.com/webapps') Office
+          | .
+     br
+     .container(data-aos='fade-up')
+       .row.gx-0
+         .col-lg-20.d-flex.flex-column.justify-content-center(data-aos='fade-up' data-aos-delay='200')
+           .content
+             h3 Corporate Presentation - KVAR Technologies Private Limited, Mumbai, India
+             p
+               | Corporate Presentation - KVAR Technologies Private Limited, Mumbai, India
+               | Started to create milestones, we, Ajinkya Electronic Systems marked our presence in the year 1985 and operate in the manufacturing / servicing of Water Level Controllers,Digital Counters,Profile Controllers,RPM Indicators,Temperature Controllers since 27. Our quality services / products have been always appreciated by our clients. Our spontaneous attitude and confident approach in offering an excellent range of Water Level Controllers,Digital Counters,Profile Controllers,RPM Indicators,Temperature Controllers, Measuring Instruments has deepened our roots in the market. We, Ajinkya Electronic Systems breathe with the aim of fully satisfying our clients with our high-quality products / services. We are a unit of highly experienced professionals, all of them contributing at the best of their potentials to offer the highest degree of efficiency and client satisfaction.
+

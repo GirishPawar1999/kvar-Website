@@ -1,0 +1,23 @@
+extends ./header.pug
+block append head 
+  link(href='/public/css/addBSeller.css', rel='stylesheet')
+block content
+  .container-fluid
+       h2 BEST SELLERS
+       if products != null 
+          table.table.table-hover
+            tr 
+                th Product Name 
+                th Product Category 
+                th Remove from Best Seller
+            each product in products 
+                tr 
+                    td 
+                        = product.name
+                    td 
+                        = product.category
+                    td 
+                        form(action = "/admin/removeBSeller/"+product._id method = "POST") 
+                            button(type="submit") Remove
+       else
+          p No products found

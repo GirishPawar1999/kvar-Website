@@ -1,0 +1,37 @@
+extends ./header.pug
+block append head 
+  link(href='/public/css/addProduct.css', rel='stylesheet')
+block content
+      .container-fluid
+         h1 Edit Developement 
+         //enctype="multipart/form-data"
+         form(action = "/admin/viewDev/"+Dev._id+"/edit?_method=PUT" enctype="multipart/form-data" method = "POST" id="product")
+            div(style="padding:50px;")
+               div.form-group
+                  label(for = "title") Develeopement  Title: 
+                  input(class ="form-control" name = "Dev[title]" value=Dev.title required)
+               div.form-group
+                  -let paras = "";
+                  each para, index in Dev.description
+                     if index !== Dev.description.length-1
+                        - paras = paras + para + "=" 
+                     else 
+                        - paras = paras + para
+                  label(for = "description") Develeopement Description: 
+                  textarea(class ="form-control" name = "Dev[description]" required)
+                    = paras
+               div.form-group 
+                  label(for ="images") Replace Image: 
+                  input(class ="form-control" type = "file" name="image") 
+               br
+               div.form-group 
+                  input(type = "hidden" value=Dev.image[0].filename name="Dev[image]") 
+               br
+               div(class="mb-3")
+                  -count = 0
+                  each image in Dev.image
+                     div(class="img-thumb")
+                        img(src="/public/Dev/"+image.filename)
+                     p Develeopement Image
+                     -count += 1
+               button(type = "submit") Update Developement

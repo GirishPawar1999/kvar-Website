@@ -1,0 +1,71 @@
+extends ./header.pug
+block content
+    main#main
+        // ======= Breadcrumbs =======
+        section.breadcrumbs
+            .container
+                ol
+                    li
+                        a(href='/') Home
+                    li
+                        a(href='/blogs') Blogs
+                    li
+                        = blog.title
+                h2
+                    = blog.title
+        // End Breadcrumbs
+        // ======= Blog Single Section =======
+        section#blog.blog
+            .container(data-aos='fade-up')
+                .row
+                    .col-lg-8.entries
+                        article.entry.entry-single
+                            .entry-img
+                                img.img-fluid(src='../public/blogs/'+blog.image[0].filename alt='')
+                            h2.entry-title
+                                a(href='/blogs/'+blog._id)
+                                    = blog.title
+                            .entry-meta
+                                ul
+                                    li.d-flex.align-items-center
+                                        i.bi.bi-person
+                                        a(href='/blogs/'+blog._id)
+                                            = blog.author
+                                    li.d-flex.align-items-center
+                                        i.bi.bi-clock
+                                        a(href='/blogs/'+blog._id)
+                                            time(datetime='2020-01-01') 
+                                                = blog.date
+                            .entry-content
+                              each para in blog.description
+                                p
+                                    = para
+                                    
+                    // End blog entries list
+                    .col-lg-4
+                        .sidebar
+                            h3.sidebar-title Search
+                            .sidebar-item.search-form
+                                form(action="/blogs" method="POST")
+                                    <input name="title" type="text" placeholder="Search by title" />
+                                    
+                                    <button type="submit" >
+                                        <i class="bi bi-search"></i>
+                                    </button>
+                            // End sidebar search formn
+                            h3.sidebar-title Recent Posts
+                            .sidebar-item.recent-posts
+                                each post in recentPosts
+                                    .post-item.clearfix
+                                        img(src='../public/blogs/'+post.image[0].filename alt='')
+                                        h4
+                                            a(href='/blogs/'+post._id) 
+                                                = post.title
+                                        time(datetime='2020-01-01') 
+                                            = post.date
+                    // End sidebar recent posts
+                // End sidebar tags
+                // End sidebar
+            // End blog sidebar
+        // End Blog Single Section
+        // End #main

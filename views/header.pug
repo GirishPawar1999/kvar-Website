@@ -1,0 +1,196 @@
+doctype html
+head
+  meta(charset='utf-8')
+  meta(content='width=device-width, initial-scale=1.0' name='viewport')
+  title KVAR TECHNOLOGIES
+  meta(content=meta.title_content name="title")
+  meta(content=meta.description name='description')
+  meta(name='keywords' content='Rpm Indicator, Ampere Hour Meter, Cricket Scoreboards, Production Display Boards, World Time Clock, Thermocouple Data Logger, Pressure Logger, Led Moving Message Display, Andon Display Board, Power Logger, Temperature Data Logger, Token Display, Alphanumeric Display System, Andon Display, Actual-target Display, Car Park Displays, Toll Rate Display, Go And Stop Display, Humidity Displays, Takt Time Display, 4 Digit Ampere Hour Meter, Stand-alone Table-top Cabinet With Any Of Kvar Ahm Models With Ready Termination, Humidity Indicator Display, Profibus Display, Moving Message Displays, Modbus Display, Petrol Diesel Rate Display, Bank Interest Rate Displays, Timer Display, Electric Scanner With Alarm, Cricket Score Board, Air Monitoring Display, 6 Digit Rpm Indicator, Siren Controller Gps/non Gps, Cricket Score Board Display, Basketball Score Board Display, Score Board Display, Iot Led Displays, Iot Temperature Indicators, Iot Temperature Humidity Logger, Coke Counter, Tea Coffee Dispensing Counter, Days Countdown Display, Pepsi Dispensing Counter, People Counting Display, Batch Counter, Dc Watt Hour Logger, Modbus Data Logger, Rtd Data Logger, Im2502c (Ampere Hour Meter With Totaliser), Level Logger, Stack Monitoring Displays, Scrolling Message Display, Dataloggers, Usb Flow Logger, Parameter Displays, Programmable Indicator, Flow Logger, Andon Display System, Information Displays, Weighbridge Display, Dc Power Meter With Logger, Safety Scoreboard Display, Dc Power Meter With Data Logging, Programmable Data Logger, Ethernet Data Logger, Dust Monitoring Data Logger, Large Display Indicators, Pollution Parameter Display Board, Scrolling Displays, Indicator With Retransmission Output, Monochrome Graphical Data Logger, Data Logger System, Event Loggers, Display System, Large Display Size Counter, Ampere Hour Meter With Totaliser, Real Time, Production Indicators, Production Monitor, Customised Electonic Display Solutions, Humidity Logger, Programmablewith Counter, Ampere Hour Meter With Module, Jumbo Led Display, Temperature Monitoring Display For Industries, Safety Score Boards, Multichannel Data Logger, Air Quality Monitoring Logger, Rpm Logger, Electrical Vehicle Checkout Systems, Universal Data Logger, Two Channel Scanner, Im2509 (Ampere Hour Meter With Three Doser Control), Jumbo Display, Wireless Data Logger, Production Display, Siren Controller, Ampere Minute Meter, Temperature Humidity Logger, Data Loggers, Data Logger With Gsm Module, Data Logger Software, Programmable Flow Rate Indicator Totaliser With Logger, Dual Channel Data Logger, Electrical Data Logger, Data Logger For Temperature And Humidity, Multiplying Counter, 4 20 Ma Indicators, Ampere Hour Logger, Multicolor Display, Led Display, Temp Data Logger, Voltage Logger, Portable Data Logger, Kah Meter, Scanner With Alarm, Counter Logger, Digital Scanner With Online Monitoring, Data Logger With Sms Facility, Jumbo Display Indicators, Temperature Controller, Ampere Hour Meter With Dosing Control, Remote Parameter Led Display, Multichannel Scanners, Digital Input Scanner With Sms Facility, Dc Power Logger, Charge Discharge Type Battery Monitoring Ampere Hour Meter, Storage Device 32 Channel Data Logger, Ampere Second Meter, Current Logger, Temperature Monitoring Display, Humidity Data Logger, Industrial Data Logger, Electrical Vehicle Checkout Systems (Ecos), Bank Interest Rate Board, Led Display Board, Dust Monitoring Logger, Multi Channel Data Logger, Alphanumeric Display, Production Display With Plc Connectivity, Single Channel Data Logger, Im 2501(Ampere Hour Meter), 4-20 Ma 2 Channel Indicator, Channel Data Logger, Large Led Display, Led Display For Production, Temperature Indicator, Coke Dispensing Counter, Led Score Board Display, Temperature Humidity Indicator, Andon Production Display, Programmable Ampere Hour Meter, 24 Channel Data Logger, 32 Channel Data Logger, 16 Channel Data Loggers, People Counter, Digital Data Loggers, Parameter Display Board, Load / Weighing Indicator Controller, Graphic Data Loggers, 8 Channel Data Looger, Level Controllers, Bell Controller, Dc Wattmeter, Yarn Length Controller, Message Boards, Mega Watt Indicator, Bank Rate Displays, Load Indicators, Displays')
+  meta(name="google-site-verification" content="85w5Vi4hIllWy5qWwC8IovnXwZQRX_RmpO19MXx-OsM")
+  // Favicons
+  link(href='/assets/img/logo.png' rel='icon')
+  link(href='/assets/img/logo.png' rel='apple-touch-icon')
+  // Google Fonts
+  link(href='https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i' rel='stylesheet')
+  link(href='https://fonts.googleapis.com/css?family=Montserrat:400,500,800' rel='stylesheet')
+  // Vendor CSS Files
+  link(href='/public/assets/vendor/aos/aos.css' rel='stylesheet')
+  link(href='/public/assets/vendor/bootstrap/css/bootstrap.min.css' rel='stylesheet')
+  link(href='/public/assets/vendor/bootstrap-icons/bootstrap-icons.css' rel='stylesheet')
+  link(href='/public/assets/vendor/glightbox/css/glightbox.min.css' rel='stylesheet')
+  link(href='/public/assets/vendor/remixicon/remixicon.css' rel='stylesheet')
+  link(href='/public/assets/vendor/swiper/swiper-bundle.min.css' rel='stylesheet')
+  // Template Main CSS File
+  link(href='/public/assets/css/style.css' rel='stylesheet')
+  //
+    =======================================================
+    * Template Name: FlexStart - v1.9.0
+    * Template URL: https://bootstrapmade.com/flexstart-bootstrap-startup-template/
+    * Author: BootstrapMade.com
+    * License: https://bootstrapmade.com/license/
+    ========================================================
+link(rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+// ======= Header =======
+header#header.header.fixed-top
+  .container-fluid.container-xl.d-flex.align-items-center.justify-content-between
+    a.logo.d-flex.align-items-center(href='/')
+      img(src='/public/assets/img/KVAR_Website_Logo-07 (1).png' alt='')
+    nav#navbar.navbar
+      ul
+        li
+          a.nav-link.scrollto(href='/') Home
+        li
+          a.nav-link.scrollto(href='/NewDev') New Developement
+        li
+          a.nav-link.scrollto(href='/about') About Us
+        li.dropdown
+          a(href='#')
+            span Products 
+            i.bi.bi-chevron-down 
+          ul 
+            each category in nav_categories
+              li.dropdown
+                a(href='/category/'+category._id)
+                  span
+                    = category.name
+                  i.bi.bi-chevron-right
+                ul 
+                  each product in nav_products 
+                    if product.category == category.name
+                      li 
+                        a(href='/products/'+product._id)
+                          = product.name
+                // col-megamenu.//
+              // end col-3
+                // col-megamenu.//
+              // end col-3
+            // end row
+          // dropdown-mega-menu.//
+        li
+          a.nav-link.scrollto(href='/contact') Contact Us
+        li
+          a(href='/blogs') Blogs
+        a(href='https://www.facebook.com/KVARTechnology', target='_blank')
+          i(class="fa fa-facebook")
+        a(href='https://www.linkedin.com/company/kvar-technologies/', target='_blank')
+          i(class="fa fa-linkedin")
+        a(href='https://instagram.com/kvartech_?igshid=YmMyMTA2M2Y=', target='_blank')
+          i(class="fa fa-instagram")
+        a(href='https://www.youtube.com/channel/UCMR4emvau2a3BcWarm6IMcw', target='_blank')
+          i(class="fa fa-youtube")
+      i.bi.bi-list.mobile-nav-toggle
+script.
+  var nav = !{JSON.stringify(nav)};
+  nav = nav-1;
+  var nav_element = document.querySelector('nav ul').childNodes
+  for(var i=0;i<=nav_element.length;i++){
+    if(nav == i){
+      nav_element[i].childNodes[0].classList.add('active');
+      break;
+    }
+  }
+    // .navbar
+// End Header
+block content
+block footer 
+ footer#footer.footer
+   .footer-top
+     .container
+       .row.gy-4
+         .col-lg-5.col-md-12.footer-info
+           a.logo.d-flex.align-items-center(href='/')
+             img(src='/public/assets/img/logo.png' alt='')
+             span KVAR&nbsp;TECH
+           p
+             | KVAR Technologies is engaged in the design, development and manufacture of embedded / micro controller based products primarily for industrial applications.
+           
+         .col-lg-2.col-6.footer-links
+           h4 Useful Links
+           ul
+             li
+               i.bi.bi-chevron-right
+               a(href='/') Home
+             li
+               i.bi.bi-chevron-right
+               a(href='/NewDev') New Devlopement 
+             li
+               i.bi.bi-chevron-right
+               a(href='/about') About us
+             li
+               i.bi.bi-chevron-right
+               a(href='/presentation') Company Presentation
+             li
+
+               i.bi.bi-chevron-right
+               a(href='/galleryImages') Company Gallery
+             li
+
+               i.bi.bi-chevron-right
+               a(href='/brochures') Company Brochure
+               
+             
+         .col-lg-2.col-6.footer-links
+           h4 Follow Us
+           ul
+             li
+               i.fa.fa-chevron-right
+               a(href='https://www.facebook.com/KVARTechnology', target='_blank') Facebook
+             li
+               i.bi.bi-chevron-right
+               a(href='https://www.linkedin.com/company/kvar-technologies/', target='_blank') Linked In
+             li
+               i.bi.bi-chevron-right
+               a(href='https://instagram.com/kvartech_?igshid=YmMyMTA2M2Y=', target='_blank') Instagram
+             li
+               i.bi.bi-chevron-right
+               a(href='https://www.youtube.com/channel/UCMR4emvau2a3BcWarm6IMcw', target='_blank') Youtube
+             
+         .col-lg-3.col-md-12.footer-contact.text-center.text-md-start
+           h4 Contact Us
+           p
+             | KVAR Technologies Pvt Ltd
+             br
+             |               68,Kakad Ind Estate,L.J crossing Rd No.3
+             br
+             |               Mahim West, Mumbai 400 016
+             br
+             |               Mahrashtra, India 
+             br
+             br
+             strong Phone:
+             |  (022) 2431 2031
+             br
+             strong Email:
+             |  sales@kvartech.com
+             br
+   .container
+     .copyright
+       | &copy; Copyright 
+       strong
+         span KVAR TECH
+       | . All Rights Reserved
+     .credits
+       // All the links in the footer should remain intact.
+       // You can delete the links only if you purchased the pro version.
+       // Licensing information: https://bootstrapmade.com/license/
+       // Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/flexstart-bootstrap-startup-template/
+       | Designed by 
+       a GY Solutions
+ // End Footer
+ a.back-to-top.d-flex.align-items-center.justify-content-center(href='#')
+   i.bi.bi-arrow-up-short
+ // Vendor JS Files
+ script(src='/public/assets/vendor/purecounter/purecounter.js')
+ script(src='/public/assets/vendor/aos/aos.js')
+ script(src='/public/assets/vendor/bootstrap/js/bootstrap.bundle.min.js')
+ script(src='/public/assets/vendor/glightbox/js/glightbox.min.js')
+ script(src='/public/assets/vendor/isotope-layout/isotope.pkgd.min.js')
+ script(src='/public/assets/vendor/swiper/swiper-bundle.min.js')
+ // Template Main JS File
+ script(src='/public/assets/js/main.js')
+ script(async='' src='https://www.googletagmanager.com/gtag/js?id=G-HHM4T8SNXK')
+script.
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-HHM4T8SNXK');

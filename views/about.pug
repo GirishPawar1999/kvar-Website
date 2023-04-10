@@ -1,0 +1,120 @@
+extends ./header.pug
+block content
+ style.
+   .navbar .megamenu{ padding: 1rem; }
+   /* ============ desktop view ============ */
+   @media all and (min-width: 992px) {
+   .navbar .has-megamenu{position:static!important;}
+   .navbar .megamenu{left:-118%; right:0; width:235%; margin-top:27px;  }
+   }
+   /* ============ desktop view .end// ============ */
+   /* ============ mobile view ============ */
+   @media(max-width: 991px){
+   .navbar.fixed-top .navbar-collapse, .navbar.sticky-top .navbar-collapse{
+   overflow-y: auto;
+   max-height: 90vh;
+   margin-top:10px;
+   }
+   }
+   /* ============ mobile view .end// ============ */
+ main#main
+   // ======= Breadcrumbs =======
+   section.breadcrumbs
+     .container
+       ol
+         li
+           a(href='index.html') Home
+         li About Us
+       h2 About Us
+   // End Breadcrumbs
+   // About us
+   // ======= About Section =======
+   section#about.about
+     .container(data-aos='fade-up')
+       .row.gx-0
+         .col-lg-6.d-flex.flex-column.justify-content-center(data-aos='fade-up' data-aos-delay='200')
+           .content
+             h2 Company
+             p
+               | We are manufacturers of instruments / electronic products / Software Solutions that focus on enhancing efficiencies by providing actionable, real-time information that enables prompt action.
+         .col-lg-6.d-flex.align-items-center(data-aos='zoom-out' data-aos-delay='200')
+           img.img-fluid(src='/public/assets/img/WEBSITE/kvar-timelines-01-1000x1000.jpg' alt='')
+         .container
+           .row.align-items-center.flex-row-reverse
+             header.section-header
+               p Our Leaders
+             .col-lg-8
+               .about-text.go-to
+                 h2.dark-color Rajesh Doshi
+                 h6.theme-color.lead Founder and CEO
+                 p
+                   | Rajesh is an alumnus of College of Engineering, Pune. He completed his Masters from Indian Institute of Science in Electronic Designs from CEDT. He has twenty five years of experience in Electronics and Instrumentation industry and is known for his technical acumen in providing solutions which has helped the business inestablishing itself in the market as solution providers to OEMs. He has in- depth knowledge and expertise in working with embedded systems which results in providing easy and user friendly answers to complex engineering situations.His philosophy of &ldquo;be your own customer&rdquo; and his unique ability in understanding customer concerns has resulted in providing solutions that enhance Productivity and processes in the manufacturing industry.
+             .col-lg-4.col-md-7.portfolio-item.filter-card
+               .portfolio-wrap
+                 img.img-fluid(src='/public/assets/img/team/Rajesh.png' alt='')
+               br
+               br
+         br
+         br
+         .container
+           .row.align-items-center.flex-row-reverse
+             .col-lg-8
+               .about-text.go-to
+                 h2.dark-color Swapna Karnik-Sankhe
+                 h6.theme-color.lead Co-Founder and CFO / COO
+                 p
+                   | Swapna is a Canadian CPA, CMA from Wilfrid Laurier University. She has over twenty years of experience working in Multinationals abroad. While in Canada, she has also worked for the Canadian Government. Her specialization in Management Accounting and experience in Management Information Systems makes her a valuable contributor to the Solution Building and Product Design process. Her philosophy is simple&mldr; enhanced efficiencies result inincreased productivity which leads to Shared Prosperity, the one which benefits both the employees and the customer. An articulate communicator and motivator, she has been capable of engaging and empowering employees to a high job satisfaction marker. She has been strong in directing and influencing the company&rsquo;s vision and strategic planning.
+             .col-lg-4.col-md-7.portfolio-item.filter-card
+               .portfolio-wrap
+                 img.img-fluid(src='/public/assets/img/team/Swapna.png' alt='')
+       br
+       br
+       .col-lg-10.d-flex.align-items-center(data-aos='fade-up' data-aos-delay='200')
+         .content
+           h2 Our Mission
+           p
+             | To provide innovative technology solutions that drives Efficiency and improves Future of Work.
+       .col-lg-10.d-flex.align-items-center(data-aos='fade-up' data-aos-delay='200')
+         .content
+           h2 Our Goals
+           p
+             li
+               | To build smart, intelligent and user-friendly Products and Services that maximize Customer satisfaction
+             li To nurture a Work culture that is efficient, environment-friendly and enjoyable
+       .row.gx-0
+         .col-lg-6.d-flex.flex-column.justify-content-center(data-aos='fade-up' data-aos-delay='200')
+           .content
+             h2 Our Philosophy
+             p
+               b People -
+               |  The Company is its people - we are committed to taking care of our employees by providing them with opportunities to learn, develop and grow in a safe environment
+               br
+               b Integrity -
+               |  We believe in conducting business in a ethical manner with fairness, respect and transparency with all our Stakeholders
+               br
+               b Excellence -
+               |  We are driven by our passion to make a difference which reflects in our continuous innovation and improvement approach
+               br
+               b Adaptability - 
+               |  We understand that in order to sustain, one must grow and in order to grow one must be flexible and quick to adapt to the ever-changing world around us
+               br
+               b Shared Prosperity &ndash;
+               |  We trust that a continuous and sustained growth of our Company will provide opportunities to our employees and communities at large to prosper
+               br
+         .col-lg-6.d-flex.align-items-center(data-aos='zoom-out' data-aos-delay='200')
+           img.img-fluid(src='/public/assets/img/WEBSITE/value-pyramid-1000x1000.jpg' alt='')
+         .col-lg-10.d-flex.flex-column.justify-content-center(data-aos='fade-up' data-aos-delay='200')
+           .content
+             h2 Our Core Values
+             p
+               | 1. We conduct our business responsibly by complying to all Laws and following ethical standards in our dealings
+               br
+               |               2. We are committed to satisfying our Customer
+               br
+               |               3. We respect all our Customers, Employees, Shareholders and all other Stakeholders
+               br
+               |               4. We take care of our Environment by adhering to global standards for Environment safety
+               br
+   // End About Section
+ // End #main
+

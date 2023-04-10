@@ -1,0 +1,63 @@
+extends ./header.pug
+block content
+  .mt-3
+    main#main
+        section#blog.blog
+          .container
+            br
+            br
+            .row
+              .col-lg-8.entries
+                section.text-center
+                  .row
+                    each Dev in Devs
+                     .col-lg-4.col-md-6.mb-2       
+                      .card
+                        .bg-image.hover-overlay.ripple(data-mdb-ripple-color='light')
+                          img.img-fluid(src='../public/Dev/'+Dev.image[0].filename alt='')
+                          a(href='#!')
+                            .mask(style='background-color: rgba(251, 251, 251, 0.15);')
+                        .card-body
+                          h5.card-title 
+                            a(href='/NewDev/'+Dev._id)
+                                    = Dev.title
+                          p.card-text
+                            = Dev.description[0].substr(0,250) + "..."
+                          .read-more
+                            a.btn.btn-primary(href='/NewDev/'+Dev._id) Read
+                .blog-pagination
+                        ul.justify-content-center
+                         -var n = 1
+                         while n <= page_count
+                            if n == cur_page
+                                li(class="active")
+                                    a(href="?page="+n)
+                                        = n
+                            else 
+                                li
+                                    a(href="?page="+n)
+                                        = n
+                            -n = n + 1
+              .col-lg-4
+               .mt-3
+                br
+                br
+                .sidebar
+                  h3.sidebar-title Search
+                  .sidebar-item.search-form
+                    form(action='action="/NewDev" method="POST"')
+                      input(type='text' placeholder='Search by Tittle')
+                      button(type='submit')
+                        i.bi.bi-search
+                  // End sidebar search formn
+                  h3.sidebar-title Recent Posts
+                  .sidebar-item.recent-posts
+                    each post in recentPosts
+                        .post-item.clearfix
+                            img(src='../public/Dev/'+post.image[0].filename alt='')
+                            h4
+                                a(href='/NewDev/'+post._id) 
+                                    = post.title
+                            time(datetime='2020-01-01') 
+                                 = post.date
+        

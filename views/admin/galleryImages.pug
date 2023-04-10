@@ -1,0 +1,24 @@
+extends ./header.pug
+block append head 
+  link(href='/public/css/viewProducts.css', rel='stylesheet')
+  link(href='/public/css/addProduct.css', rel='stylesheet')
+block content
+   .container-fluid 
+    a(href="/admin/addGalleryImages" style="background-color:green; color:white; padding:5px; border:2px solid black;") Add Images to Gallery
+    br
+    br
+    if images != null 
+      table.table.table-hover
+        tr 
+            th Image
+            th Delete Image
+        each image in images
+            tr 
+                td 
+                    div(class="img-thumb")
+                        img(src="/public/gallery/imgs/"+image)
+                td 
+                    form(action = 'galleryImages/'+image+'/delete?_method=DELETE' enctype="multipart/form-data" method = "POST")
+                        button(type="submit") Delete Image
+    else
+      p No Images found

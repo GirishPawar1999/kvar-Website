@@ -1,0 +1,20 @@
+extends ./header.pug
+block append head 
+  link(href='/public/css/addCategory.css', rel='stylesheet')
+block content
+   .container-fluid
+       form(action = "/admin/addCategory", enctype="multipart/form-data" method = "POST" id="category")
+           div(style="padding:50px;")
+            h2 ADD NEW CATEGORY
+            br
+            div.form-group
+               label(for = "name") Category Name
+               input(class ="form-control" name = "category[name]" required)
+            div.form-group
+               label(for = "description") Category Description
+               textarea(class ="form-control" name = "category[description]" required)
+            div.form-group
+               label(for ="images") Upload Image  
+               input(type = "file" name="images" required multiple) 
+            button(class="btn btn-primary" type = "submit") Add category
+            br      

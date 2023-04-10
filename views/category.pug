@@ -1,0 +1,48 @@
+extends ./header.pug
+block content
+ main#main
+   // ======= Breadcrumbs =======
+   section.breadcrumbs
+     .container
+       ol
+         li
+           a(href='/') Home
+         li 
+          = category.name
+   // End Breadcrumbs
+   // ======= Portfolio Details Section =======
+   section#portfolio-details.portfolio-details
+     .container
+       .row.gy-4
+         .col-lg-5
+           .portfolio-details-slider.swiper
+             .swiper-wrapper.align-items-center
+              each image in category.images
+               .swiper-slide
+                 img(src='/public/img/'+image.filename alt='')
+             .swiper-pagination
+         .col-lg-7
+           .portfolio-description
+             h2 
+               = category.name
+             p
+               = category.description
+     section#portfolio.portfolio
+      .container(data-aos='fade-up')
+       header.section-header
+         p Our Products
+       .row(data-aos='fade-up' data-aos-delay='100')
+         .col-lg-12.d-flex.justify-content-center
+       .row.gy-4.portfolio-container(data-aos='fade-up' data-aos-delay='200')
+        each product in products
+         a(href="/products/"+product._id)
+          .col-lg-4.col-md-6.portfolio-item.filter-app
+           .portfolio-wrap
+            center
+              img.img-fluid(src='/public/img/'+product.images[0].filename alt='' width='250' height='500')
+              .col-lg-10
+                .portfolio-description
+                  h3 
+                    = product.name
+   // End Portfolio Details Section
+ // End #main

@@ -1,0 +1,43 @@
+extends ./header.pug
+block content
+    main#main
+        // ======= Breadcrumbs =======
+        section.breadcrumbs
+            .container
+                ol
+                    li
+                        a(href='/') Home
+                    li Portfolio Details
+                h2 Portfolio Details
+            // End Breadcrumbs
+            // ======= Portfolio Details Section =======
+        section#portfolio-details.portfolio-details
+            .container
+                .row.gy-8
+                    .col-lg-4
+                        .portfolio-details-slider.swiper
+                            .swiper-wrapper.align-items-center
+                                .swiper-slide
+                                    img(src='/public/assets/img/Br1.png' alt='')
+                                .swiper-slide
+                                    img(src='/public/assets/img/br2.png' alt='')
+                                .swiper-slide
+                                    img(src='/public/assets/img/br3.png' alt='')
+                                .swiper-slide
+                                    img(src='/public/assets/img/br4.png' alt='')
+                                .swiper-slide
+                                    img(src='/public/assets/img/br5.png' alt='')
+                                .swiper-slide
+                                    img(src='/public/assets/img/br6.png' alt='')
+                            .swiper-pagination
+                    .col-lg-7
+                        .portfolio-description
+                            center
+                                h2 Brochures
+                                each brochure in brochures
+                                    br
+                                    button.btn
+                                        a(href="/public/brochures/"+brochure download)
+                                            i.fa.fa-download
+                                            = " Download " +brochure
+            // End #main

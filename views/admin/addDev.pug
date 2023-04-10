@@ -1,0 +1,27 @@
+extends ./header.pug
+block append head 
+  link(href='/public/css/addProduct.css', rel='stylesheet')
+block content
+  .container-fluid
+    
+    form(action = "/admin/addDev", enctype="multipart/form-data" method = "POST" id="product")
+     div(style="padding:50px;")
+      h2 ADD NEW DEV
+      br
+      div.form-group
+         label(for = "title") Developement  Title
+         input(class ="form-control" name = "Dev[title]" required)
+      div.form-group
+         label(for = "description") Developement Description
+         textarea(class ="form-control" name = "Dev[description]" placeholder="example: \n warranty=1 year \n brand=kvartech \n x=y" required)
+
+      div.form-group
+         label(for ="image") Upload Image  
+         input(type = "file" name="image" required) 
+      button(class="btn btn-primary" type = "submit") Developement Blog
+      br
+    if insertRequest 
+      if queryPassed
+         p Product Inserted Successfully
+      else 
+         p There is some error in inserting this product, Please try again

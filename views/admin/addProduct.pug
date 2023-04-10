@@ -1,0 +1,45 @@
+extends ./header.pug
+block append head 
+  link(href='/public/css/addProduct.css', rel='stylesheet')
+block content
+  .container-fluid
+    if categories.length == 0
+      h4 !!Please add a category first ,before adding a product!
+    
+    form(action = "/admin/addProduct", enctype="multipart/form-data" method = "POST" id="product")
+     div(style="padding:50px;")
+      h2 ADD NEW PRODUCT
+      br
+      div.form-group
+         label(for = "name") Product Name
+         input(class ="form-control" name = "product[name]" required)
+      div.form-group
+         label(for = "description") Product Description
+         textarea(class ="form-control" name = "product[description]" required)
+      div.form-group
+         label(for = "details") Product Details
+         textarea(class ="form-control" style="height:100px;" name = "product[details]" placeholder="example: \n warranty=1 year \n brand=kvartech \n x=y" required)
+      div.form-group 
+         label(for = "price") Product price
+         input(class ="form-control" style="width:80px;" name="product[price]" required)
+      div.form-group 
+         label(for ="category") Product Category
+         select(class ="form-control" name="product[category]" required)
+            each category in categories
+                  option 
+                     = category.name
+      div.form-group
+         label(for ="images") Upload Image  
+         input(type = "file" name="images" required multiple) 
+      div.form-group 
+         label(for ="brochure") Select Brochure 
+         select(class ="form-control" name="product[brochure]" required)
+            each brochure in brochures 
+               option=brochure 
+      button(class="btn btn-primary" type = "submit") Add product
+      br
+    if insertRequest 
+      if queryPassed
+         p Product Inserted Successfully
+      else 
+         p There is some error in inserting this product, Please try again

@@ -1,0 +1,33 @@
+extends ./header.pug
+block append head 
+  link(href='/public/css/addProduct.css', rel='stylesheet')
+block content
+      .container-fluid
+         h1 Edit Model
+         //enctype="multipart/form-data"
+         form(action = "/admin/products/"+product_id+"/models/"+model._id+"/edit?_method=PUT" enctype="multipart/form-data" method = "POST" id="product")
+          div(style="padding:50px;")
+            div.form-group
+               label(for = "name") Model Name: 
+               input(class ="form-control" name = "model[name]" value=model.name required)
+            
+            div.form-group
+               label(for = "description") Model Description: 
+               textarea(class ="form-control" name = "model[description]" required)
+                   = model.description
+            br
+            div.form-group 
+               label(for ="images") Add More Images: 
+               input(class ="form-control" type = "file" name="images" multiple) 
+            br
+            div(class="mb-3")
+                div(class="img-thumb")
+                    img(src="/public/img/"+model.images[0].filename)
+                    input(type="checkbox" id="image-1" name="deleteImages[]" value=model.images[0].filename)
+                    label(for='image-1') Delete Image?
+            button(class="btn btn-primary" type = "submit") Update model
+         if(updateRequest)
+            if(result)
+               p Update successfull 
+            else
+               p There is some issue in updating the model, Please try again

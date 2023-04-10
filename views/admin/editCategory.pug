@@ -1,0 +1,30 @@
+extends ./header.pug
+block append head 
+  link(href='/public/css/addProduct.css', rel='stylesheet')
+block content
+      .container-fluid
+         h1 Edit Category
+         //enctype="multipart/form-data"
+         form(action = "/admin/categories/"+category._id+"/edit?_method=PUT" enctype="multipart/form-data" method = "POST" id="product")
+            div(style="padding:50px;")
+               div.form-group
+                  label(for = "name") Category Name: 
+                  input(class ="form-control" name = "category[name]" value=category.name required)
+               div.form-group
+                  label(for = "description") Category Description: 
+                  textarea(class ="form-control" name = "category[description]" required)
+                      = category.description
+               br
+               div.form-group 
+                  label(for ="images") Add More Images: 
+                  input(class ="form-control" type = "file" name="images" multiple) 
+               br
+               div(class="mb-3")
+                  -count = 0
+                  each image in category.images 
+                     div(class="img-thumb")
+                        img(src="/public/img/"+image.filename)
+                     input(type="checkbox" id="image-"+count name="deleteImages[]" value=image.filename)
+                     label(for='image-'+count) Delete Image?
+                     -count += 1
+               button(type = "submit") Update Category

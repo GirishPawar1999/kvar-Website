@@ -1,0 +1,26 @@
+extends ./header.pug
+block append head 
+  link(href='/public/css/addProduct.css', rel='stylesheet')
+block content
+  .container-fluid
+    
+    form(action = "/admin/products/"+ id +"/addModel", enctype="multipart/form-data" method = "POST" id="product")
+     div(style="padding:50px;")
+      h2 ADD NEW MODEL
+      br
+      div.form-group
+         label(for = "name") Model Name
+         input(class ="form-control" name = "model[name]" required)
+      div.form-group
+         label(for = "description") Model Description
+         textarea(class ="form-control" name = "model[description]" required multiple)
+      div.form-group
+         label(for ="images") Upload Image  
+         input(type = "file" name="images" required) 
+      button(class="btn btn-primary" type = "submit") Add Model
+      br
+    if insertRequest 
+      if queryPassed
+         p Model Inserted Successfully
+      else 
+         p There is some error in inserting this model, Please try again

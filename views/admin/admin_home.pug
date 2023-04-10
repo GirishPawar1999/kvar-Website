@@ -1,0 +1,19 @@
+doctype html
+html
+   head
+      title Admin
+   body
+       include ./header.pug
+
+       h2  Hello #{user}!
+
+       h3 What do you want to do today ?
+
+       ul 
+         li: a(href='admin/addCategory') Add new Category
+         li: a(href='/admin/Categories') View Categories
+         li: a(href='/admin/addProduct') Add new Product
+         li: a(href='/admin/products') View Products 
+         li: a(href='/admin/changePassword') Change Password
+
+       include ./footer.pug

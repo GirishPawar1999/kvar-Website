@@ -1,0 +1,27 @@
+extends ./header.pug
+block append head 
+  link(href='/public/css/viewProducts.css', rel='stylesheet')
+  link(href='/public/css/addProduct.css', rel='stylesheet')
+block content
+   .container-fluid 
+    a(href="/admin/addGalleryVideos" style="background-color:green; color:white; padding:5px; border:2px solid black;") Add Videos to Gallery
+    br
+    br
+    if videos != null 
+      table.table.table-hover
+        tr 
+            th Video
+            th Delete Video
+        each video in videos
+            tr 
+                td 
+                    div(class="img-thumb")
+                        video(width='320' height='240' controls='')
+                            source(src='/public/gallery/vids/'+video type='video/mp4')
+                            source(src='/public/gallery/vids/'+video type='video/ogg')
+                            | Your browser does not support the video tag.
+                td 
+                    form(action = 'galleryVideos/'+video+'/delete?_method=DELETE' enctype="multipart/form-data" method = "POST")
+                        button(type="submit") Delete Video
+    else
+      p No Images found

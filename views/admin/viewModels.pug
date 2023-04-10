@@ -1,0 +1,25 @@
+extends ./header.pug
+block append head 
+  link(href='/public/css/viewProducts.css', rel='stylesheet')
+block content
+  .container-fluid
+   h2 UPDATE MODELS
+   <br>
+   
+   if models
+      table.table.table-hover
+        tr 
+            th Model Name 
+            th Edit Model
+            th Delete Model
+        each model in models
+            tr 
+                td 
+                    = model.name
+                td 
+                    a(href="/admin/products/"+product_id+"/models/"+model._id+"/edit") Edit
+                td 
+                    form(action = "/admin/products/"+product_id+"/models/"+model._id+"/delete?_method=DELETE" enctype="multipart/form-data" method = "POST")
+                        button(type="submit") Delete Model
+   else
+      p No models found

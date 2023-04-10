@@ -1,0 +1,29 @@
+extends ./header.pug
+block append head 
+  link(href='/public/css/addProduct.css', rel='stylesheet')
+block content
+  .container-fluid
+    
+    form(action = "/admin/addBlog", enctype="multipart/form-data" method = "POST" id="product")
+     div(style="padding:50px;")
+      h2 ADD NEW BLOG
+      br
+      div.form-group
+         label(for = "title") Blog Title
+         input(class ="form-control" name = "blog[title]" required)
+      div.form-group
+         label(for = "description") Blog Description
+         textarea(class ="form-control" name = "blog[description]" placeholder="example: \n warranty=1 year \n brand=kvartech \n x=y" required)
+      div.form-group
+         label(for = "author") Blog Author
+         textarea(class ="form-control" style="height:100px;" name = "blog[author]" required)
+      div.form-group
+         label(for ="image") Upload Image  
+         input(type = "file" name="image" required) 
+      button(class="btn btn-primary" type = "submit") Add Blog
+      br
+    if insertRequest 
+      if queryPassed
+         p Product Inserted Successfully
+      else 
+         p There is some error in inserting this product, Please try again

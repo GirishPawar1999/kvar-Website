@@ -1,0 +1,48 @@
+extends ./header.pug
+block content
+ style.
+  .navbar .megamenu{ padding: 1rem; }
+  /* ============ desktop view ============ */
+  @media all and (min-width: 992px) {
+  .navbar .has-megamenu{position:static!important;}
+  .navbar .megamenu{left:-159%; right:0; width:280%; margin-top:50px;  }
+  }
+  /* ============ desktop view .end// ============ */
+  /* ============ mobile view ============ */
+  @media(max-width: 991px){
+  .navbar.fixed-top .navbar-collapse, .navbar.sticky-top .navbar-collapse{
+  overflow-y: auto;
+  max-height: 90vh;
+  margin-top:15px;
+  }
+  }
+  /* ============ mobile view .end// ============ */
+ main#main
+  // ======= Breadcrumbs =======
+  section.breadcrumbs
+    .container
+      ol
+        li
+          a(href='/') Home
+      h2 
+        = Dev.title
+  // End Breadcrumbs
+  // ======= Portfolio Details Section =======
+  //===send mail form
+  form(action = "/NewDev/"+Dev._id, enctype="multipart/form-data" method = "POST")
+   section#portfolio-details.portfolio-details
+     .container
+       .row.gy-4
+         .col-lg-4
+           .portfolio-details-slider.swiper
+             .swiper-wrapper.align-items-center
+               each image in Dev.image
+                .swiper-slide
+                  img(src='/public/Dev/'+image.filename alt='')
+             .swiper-pagination
+         .col-lg-7
+           .portfolio-description
+             h2 
+                = Dev.title
+             p
+                = Dev.description

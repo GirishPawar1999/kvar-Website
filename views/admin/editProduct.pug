@@ -1,0 +1,67 @@
+extends ./header.pug
+block append head 
+  link(href='/public/css/addProduct.css', rel='stylesheet')
+block content
+      .container-fluid
+         h1 Edit Product
+         //enctype="multipart/form-data"
+         form(action = "/admin/products/"+product._id+"/edit?_method=PUT" enctype="multipart/form-data" method = "POST" id="product")
+          div(style="padding:50px;")
+            div.form-group
+               label(for = "name") Product Name: 
+               input(class ="form-control" name = "product[name]" value=product.name required)
+            
+            div.form-group
+               label(for = "description") Product Description: 
+               textarea(class ="form-control" name = "product[description]" required)
+                   = product.description
+            br
+            div.form-group
+               label(for = "price") Product price: 
+               input(class ="form-control" style="width:80px;" name="product[price]" value=product.price required)
+            div.form-group
+               label(for = "details") Product details:
+               -var x = ""
+               each value,key in product.details
+                  - x = x + key + "=" + value + "\n"
+               textarea(class ="form-control" name="product[details]" style="height:100px;" required)
+                  = x
+            div.form-group 
+               label(for ="category") Product Category: 
+               select(class ="form-control" name="product[category]" required)
+                  each category in categories
+                     if category.name == product.category
+                        option(selected="selected") 
+                           = category.name
+                     else 
+                        option 
+                           = category.name
+            br
+            div.form-group 
+               label(for ="images") Add More Images: 
+               input(class ="form-control" type = "file" name="images" multiple) 
+            br
+            div.form-group 
+               label(for ="brochure") Brochure: 
+               select(class ="form-control" name="product[brochure]" required)
+                  each brochure in brochures 
+                     if brochure == product.brochure
+                        option(selected="selected") 
+                           = brochure 
+                     else 
+                        option 
+                           = brochure
+            div(class="mb-3")
+               -count = 0
+               each image in product.images 
+                  div(class="img-thumb")
+                     img(src="/public/img/"+image.filename)
+                  input(type="checkbox" id="image-"+count name="deleteImages[]" value=image.filename)
+                  label(for='image-'+count) Delete Image?
+                  -count += 1
+            button(class="btn btn-primary" type = "submit") Update product
+         if(updateRequest)
+            if(result)
+               p Update successfull 
+            else
+               p There is some issue in updating the product, Please try again

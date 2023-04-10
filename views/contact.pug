@@ -1,0 +1,99 @@
+extends ./header.pug
+block content
+ style.
+   .navbar .megamenu{ padding: 1rem; }
+   /* ============ desktop view ============ */
+   @media all and (min-width: 992px) {
+   .navbar .has-megamenu{position:static!important;}
+   .navbar .megamenu{left:-159%; right:0; width:289%; margin-top:50px;  }
+   }
+   /* ============ desktop view .end// ============ */
+   /* ============ mobile view ============ */
+   @media(max-width: 991px){
+   .navbar.fixed-top .navbar-collapse, .navbar.sticky-top .navbar-collapse{
+   overflow-y: auto;
+   max-height: 90vh;
+   margin-top:15px;
+   }
+   }
+   /* ============ mobile view .end// ============ */
+ main#main
+   // ======= Breadcrumbs =======
+   section.breadcrumbs
+     .container
+       ol
+         li
+           a(href='index.html') Home
+         li Contact Us
+       h2 Contact Us
+   // End Breadcrumbs
+   // ======= Contact Section =======
+   section#contact.contact
+     .container(data-aos='fade-up')
+       header.section-header
+         p Contact Us
+       .row.gy-4
+         .col-lg-6
+           .row.gy-4
+             .col-md-6
+               .info-box
+                 i.bi.bi-geo-alt
+                 h3 Address
+                 p
+                   | KVAR Technologies Pvt. Ltd
+                   br
+                   | 68, Kakad Ind.Estate, L.J Cross Rd No.3, Mahim West, Mumbai 400 016
+             .col-md-6
+               .info-box
+                 i.bi.bi-telephone
+                 h3 Call Us
+                 p
+                   | (022) 2431 2031
+                   br
+                   | +91 9869087575
+             .col-md-6
+               .info-box
+                 i.bi.bi-envelope
+                 h3 Email Us
+                 p
+                   | sales@kvartech.com
+                   br
+                   | display@kvartech.com
+             .col-md-6
+               .info-box
+                 i.bi.bi-clock
+                 h3 Open Hours
+                 p
+                   | Monday - Saturday
+                   br
+                   | 9:30AM - 06:00PM
+         .col-lg-6
+           form.php-email-form(action='/sendEmail' method='post')
+             .row.gy-4
+               .col-md-6
+                 input.form-control(type='text' name='name' placeholder='Your Name' required='')
+               .col-md-6
+                 input.form-control(type='email' name='email' placeholder='Your Email' required='')
+               .col-md-12
+                 input.form-control(type='text' name='subject' placeholder='Subject' required='')
+               .col-md-12
+                 textarea.form-control(name='message' rows='6' placeholder='Message' required='')
+               .col-md-12.text-center
+                 h4 Please answer below question for human verification 
+                 h5 
+                  = question
+               input(type="hidden" name="questionIndex" required='' value=questionIndex)
+               .col-md-12
+                 textarea.form-control(name='answer' rows='1' placeholder='Answer' required='')
+               .col-md-12.text-center
+                 .loading Loading
+                 .error-message
+                 .sent-message Your message has been sent. Thank you!
+                 button(type='submit') Send Message
+     br
+     br
+     .map-section
+       iframe(style='border:0; width: 100%; height: 350px;' src='https://maps.google.com/maps?q=kvar%20tech&t=&z=17&ie=UTF8&iwloc=&output=embed' frameborder='0' allowfullscreen='')
+ script(src='/public/assets/vendor/php-email-form/validate.js')
+   // End Contact Section
+ // End #main

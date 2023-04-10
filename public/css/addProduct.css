@@ -1,0 +1,31 @@
+textarea {
+    width: 350px;
+    height: 250px;
+  }
+
+#product {
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  margin-bottom:10px; 
+  border-radius:10px;
+}
+
+#product label{
+  color:black;
+  opacity:0.8;
+}
+
+#product h2{
+  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#product button:hover{
+  background-color: blue;
+}
+
+.img-thumb img{
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 150px;
+}

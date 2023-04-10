@@ -1,0 +1,83 @@
+extends ./header.pug
+block content
+    main#main
+    // ======= Breadcrumbs =======
+    section.breadcrumbs
+        .container
+            ol
+                li
+                a(href='/') Home / 
+                li Blogs
+            h2 Blogs
+    // End Breadcrumbs
+    // ======= Blog Section =======
+    section#blog.blog
+        .container(data-aos='fade-up')
+            .row
+                .col-lg-8.entries
+                    if blogs.length !== 0
+                        each blog in blogs
+                            article.entry
+                                .entry-img
+                                    img.img-fluid(src='../public/blogs/'+blog.image[0].filename alt='')
+                                h2.entry-title
+                                    a(href='/blogs/'+blog._id)
+                                        = blog.title
+                                .entry-meta
+                                    ul
+                                        li.d-flex.align-items-center
+                                            i.bi.bi-person
+                                            a(href="/blogs/"+blog._id)
+                                                = blog.author
+                                        li.d-flex.align-items-center
+                                            i.bi.bi-clock
+                                            a(href="/blogs/"+blog._id)
+                                                = blog.date
+                                .entry-content
+                                    p
+                                        = blog.description[0].substr(0,250) + "..."
+                                    .read-more
+                                        a(href='/blogs/'+blog._id) Read More
+                    else 
+                        h2 No Blogs found
+                    // End blog entry
+                    .blog-pagination
+                        ul.justify-content-center
+                         -var n = 1
+                         while n <= page_count
+                            if n == cur_page
+                                li(class="active")
+                                    a(href="?page="+n)
+                                        = n
+                            else 
+                                li
+                                    a(href="?page="+n)
+                                        = n
+                            -n = n + 1
+                    // End blog entries list
+                .col-lg-4
+                    .sidebar
+                        h3.sidebar-title Search
+                        .sidebar-item.search-form
+                            form(action="/blogs" method="POST")
+                                <input name="title" type="text" placeholder="Search by title" />
+                                    
+                                <button type="submit" >
+                                    <i class="bi bi-search"></i>
+                                </button>
+                            // End sidebar search formn
+                        h3.sidebar-title Recent Posts
+                        .sidebar-item.recent-posts
+                            each post in recentPosts
+                                .post-item.clearfix
+                                    img(src='../public/blogs/'+post.image[0].filename alt='')
+                                    h4
+                                        a(href='/blogs/'+post._id) 
+                                            = post.title
+                                    time(datetime='2020-01-01') 
+                                        = post.date
+                        // End sidebar recent posts
+                    // End sidebar
+                    // End blog sidebar
+        // End Blog Section
+    // End #main

@@ -1,0 +1,18 @@
+extends ./header.pug
+block append head 
+  link(href='/public/css/viewCategories.css', rel='stylesheet')
+block content
+  .container-fluid
+       h2 UPDATE CATEGORY
+       
+       if categories != null 
+          table.table.table-hover
+            th Category Name 
+            each category in categories
+                tr 
+                    td 
+                        = category.name
+                    td 
+                        a(href="/admin/categories/"+category._id) Edit
+       else
+          p No Category found

@@ -1,0 +1,7 @@
+/node_modules
+/public/img
+/public/gallery
+/public/brochures
+/public/Dev
+/public/blogs
+./.env

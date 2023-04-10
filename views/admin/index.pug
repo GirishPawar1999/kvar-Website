@@ -1,0 +1,98 @@
+extends ./header.pug
+block content
+  .container-fluid
+    // Page Heading
+    .d-sm-flex.align-items-center.justify-content-between.mb-4
+      h1.h3.mb-0.text-gray-800 Dashboard
+      
+    // Content Row
+    .row
+      // Earnings (Monthly) Card Example
+      .col-xl-3.col-md-6.mb-4
+        .card.border-left-primary.shadow.h-100.py-2
+          .card-body
+            .row.no-gutters.align-items-center
+              .col.mr-2
+                .text-xs.font-weight-bold.text-primary.text-uppercase.mb-1
+                  | Total Products
+                .h5.mb-0.font-weight-bold.text-gray-800 
+                  = productsCatWise.total
+
+              .col-auto
+                i.fas.fa-calendar.fa-2x.text-gray-300
+      // Earnings (Monthly) Card Example
+      .col-xl-3.col-md-6.mb-4
+        .card.border-left-success.shadow.h-100.py-2
+          .card-body
+            .row.no-gutters.align-items-center
+              .col.mr-2
+                -var count = -1
+                each product in productsCatWise
+                  -count = count + 1
+                .text-xs.font-weight-bold.text-success.text-uppercase.mb-1
+                  | Total Categories
+                .h5.mb-0.font-weight-bold.text-gray-800 
+                = count
+              .col-auto
+                i.fas.fa-dollar-sign.fa-2x.text-gray-300
+      // Earnings (Monthly) Card Example
+      
+    // Content Row
+    .row
+      // Area Chart
+      .col-xl-8.col-lg-7
+        .card.shadow.mb-4
+          // Card Header - Dropdown
+          .card-header.py-3.d-flex.flex-row.align-items-center.justify-content-between
+            h6.m-0.font-weight-bold.text-primary Category Wise Products
+          // Card Body
+          .card-body
+            .chart-area(style="width:85%;")
+              canvas#myChart
+      
+block append footer 
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  script.
+    const temp = !{JSON.stringify(productsCatWise)}
+    const labels = []
+    const count = []
+    for(let category in temp){
+      if(category != "total"){
+         labels.push(category)
+          count.push(temp[category])
+      }
+    }
+      const data = {
+        labels: labels,
+        datasets: [{
+        label: 'Products Table',
+        data: count,
+        backgroundColor: [
+        'rgba(255, 99, 132, 0.2)',
+        'rgba(255, 159, 64, 0.2)'
+     ],
+    borderColor: [
+      'rgb(255, 99, 132)',
+      'rgb(255, 159, 64)'
+    ],
+    borderWidth: 1
+    }]
+    };
+    const config = {
+        type: 'bar',
+        data: data,
+        options: {
+        scales: {
+        y: {
+        beginAtZero: true
+        }
+        }
+    },
+    };
+    const myChart = new Chart(
+    document.getElementById('myChart'),
+    config
+    );
+       
+    
+

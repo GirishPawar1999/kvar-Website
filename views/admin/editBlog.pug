@@ -1,0 +1,40 @@
+extends ./header.pug
+block append head 
+  link(href='/public/css/addProduct.css', rel='stylesheet')
+block content
+      .container-fluid
+         h1 Edit Blog
+         //enctype="multipart/form-data"
+         form(action = "/admin/blogs/"+blog._id+"/edit?_method=PUT" enctype="multipart/form-data" method = "POST" id="product")
+            div(style="padding:50px;")
+               div.form-group
+                  label(for = "title") Blog Title: 
+                  input(class ="form-control" name = "blog[title]" value=blog.title required)
+               div.form-group
+                  -let paras = "";
+                  each para, index in blog.description
+                     if index !== blog.description.length-1
+                        - paras = paras + para + "=" 
+                     else 
+                        - paras = paras + para
+                  label(for = "description") Blog Description: 
+                  textarea(class ="form-control" name = "blog[description]" required)
+                    = paras
+               div.form-group
+                  label(for = "author") Blog Author: 
+                  input(class ="form-control" name = "blog[author]" value=blog.author required)
+               div.form-group 
+                  label(for ="images") Replace Image: 
+                  input(class ="form-control" type = "file" name="images") 
+               br
+               div.form-group 
+                  input(type = "hidden" value=blog.image[0].filename name="blog[image]") 
+               br
+               div(class="mb-3")
+                  -count = 0
+                  each image in blog.image
+                     div(class="img-thumb")
+                        img(src="/public/blogs/"+image.filename)
+                     p Blog Image
+                     -count += 1
+               button(type = "submit") Update Blog

@@ -1,0 +1,23 @@
+extends ./header.pug
+block append head 
+  link(href='/public/css/viewProducts.css', rel='stylesheet')
+block content
+   .container-fluid 
+    a(href="/admin/addBrochure" style="background-color:green; color:white; padding:5px; border:2px solid black;") Add Brochure
+    br
+    br
+    if brochures != null 
+      table.table.table-hover
+        tr 
+            th Brochure Name
+            th Delete Brochure
+        each brochure in brochures
+            tr 
+                td 
+                    a(href="/public/brochures/"+brochure download) 
+                        = brochure
+                td 
+                    form(action = 'brochures/'+brochure+'/delete?_method=DELETE' enctype="multipart/form-data" method = "POST")
+                        button(type="submit") Delete Brochure
+    else
+      p No brochures found

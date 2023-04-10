@@ -1,0 +1,47 @@
+extends ./header.pug
+block append head 
+  link(href='/public/css/addBSeller.css', rel='stylesheet')
+block content
+    .container-fluid
+        h2 ADD BEST SELLER
+        <br>
+        form(action="/admin/addBSeller" method="POST")
+          <div class="input-group">
+             <div class="form-outline">
+                 <input name="name" type="search" id="form1" class="form-control" />
+                 <label class="form-label" for="name">Search by Product Name/Category</label>
+             </div>
+             <button style="height:40px; margin-left:5px;" type="submit" class="btn btn-primary">
+                 <i class="fas fa-search"></i>
+             </button>
+          </div>
+        <br>
+        if products != null 
+           table.table.table-hover
+             tr 
+                 th Product Name 
+                 th Product Category 
+                 th Edit Product
+             each product in products 
+                 tr 
+                     td 
+                         = product.name
+                     td 
+                         = product.category
+                     td 
+                         form(action = "/admin/addBSeller/"+product._id method = "POST") 
+                             button(type="submit") Add as Best Seller
+
+        else
+            p No products found
+        -var n = 1
+          div.flex-container
+            p Pages:
+            while n <= page_count
+              if n == cur_page
+                a(href="addBSeller?page="+n id="active")
+                  = n
+              else 
+                a(href="addBSeller?page="+n)
+                  = n
+              -n = n + 1
