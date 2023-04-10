@@ -44,5 +44,6 @@ block content
            .portfolio-description
              h2 
                 = Dev.title
-             p
-                = Dev.description
+             each para in Dev.description
+                p
+                    = para
