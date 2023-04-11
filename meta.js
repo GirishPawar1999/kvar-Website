@@ -46,7 +46,7 @@ const metas = {
     description: "",
   },
   NewDevs: {
-    title_content: "New Developements",
+    title_content: "New Developements at KVAR",
     description: "New Developements at KVAR Technologies Private Limited",
   },
   NewDev: {

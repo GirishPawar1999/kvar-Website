@@ -130,10 +130,12 @@ block content
   font-weight: bold;
   }
   }
+
  if product.models
-  section#portfolio.portfolio
+  section#portfolio-details.portfolio-details
    .row.gy-4.portfolio-container(data-aos='fade-up' data-aos-delay='200')
-    each model in product.models
+    .container
+     each model in product.models
       .col-lg-4.col-md-6.portfolio-item.filter-app
         center 
           img.img-fluid(src='/public/img/'+model.images[0].filename alt='' width='250' height='500' )
@@ -146,7 +148,7 @@ block content
                 -let x = model.description.split("\n")
                 ul
                 each line in x
-                  li(align='left')
+                  li(align='center')
                     = line
 
       
