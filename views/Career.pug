@@ -43,30 +43,26 @@ block content
               div
                 h4.mb-4 Apply For The Job
                 form.php-email-form(action='/sendEmail2' method='post')
-                  .row.g-3
-                    .col-12.col-sm-6
-                      input.form-control(type='text' name='name' placeholder='Your Name')
-                    .col-12.col-sm-6
-                      input.form-control(type='email' name='email' placeholder='Your Email')
-                    .col-12.col-sm-6
-                      input.form-control(type='text' name='subject' placeholder='Interested Job Profile')
-                    .col-12.col-sm-6
-                      input.form-control.bg-white(name='resume' type='file')
-                    .col-12
-                      textarea.form-control(rows='5' name='message' placeholder='Pls do Enter your name, Contact no ')
-                    .col-md-12.text-center
-                      h4 Please answer below question for human verification 
-                      h5 
-                       = question
-                    input(type="hidden" name="questionIndex" required='' value=questionIndex)
-                    .col-md-12
-                      textarea.form-control(name='answer' rows='1' placeholder='Answer' required='')
-                    .col-md-12.text-center
-                      .loading Loading
-                      .error-message
-                      .sent-message Your message has been sent. Thank you!
-                    .col-12
-                      button.btn.btn-primary.w-100(type='submit') Apply Now
+                 .row.g-3
+                   .col-12.col-sm-6
+                     input.form-control(type='text' name='name' placeholder='Your Name')
+                   .col-12.col-sm-6
+                     input.form-control(type='email' name='email' placeholder='Your Email')
+                   .col-12.col-sm-6
+                     input.form-control(type='text' name='subject' placeholder='Interested Job Profile')
+                   .col-12.col-sm-6
+                     input.form-control.bg-white(name='resume' type='file')
+                   .col-12
+                     textarea.form-control(rows='5' name='message' placeholder='Pls do Enter your name, Contact no ')
+                   .col-md-12.text-center
+                     h4 Please answer below question for human verification 
+                     h5 
+                      = question
+                   input(type="hidden" name="questionIndex" required='' value=questionIndex)
+                   .col-md-12
+                     textarea.form-control(name='answer' rows='1' placeholder='Answer' required='')
+                   .col-md-12.text-center
+                    button.btn.btn-primary.w-100(type='submit') Apply Now
             .col-lg-4
               .bg-light.rounded.p-5.mb-4.wow.slideInUp(data-wow-delay='0.1s')
                 h4.mb-4 Job Summery

@@ -320,6 +320,36 @@ app.get("/Careers/:id", async function (req, res) {
   });
 });
 
+app.get("/blogs", async function (req, res) {
+  let page = 1;
+  if (req.query.page) {
+    page = req.query.page;
+  }
+  var val = await query.fetchAllBlogs();
+  var page_count = Math.ceil(val.length / 3);
+
+  let blogs = val.slice(page * 3 - 3, page * 3);
+  let recentPosts = val.slice(0, 5);
+  for (let i = 0; i < blogs.length; i++) {
+    let timestamp = blogs[i]._id.getTimestamp();
+    blogs[i].date = moment(timestamp).format("DD-MM-YY");
+  }
+  for (let i = 0; i < recentPosts.length; i++) {
+    let timestamp = recentPosts[i]._id.getTimestamp();
+    recentPosts[i].date = moment(timestamp).format("DD-MM-YY");
+  }
+
+  res.render("blogsHome", {
+    meta: metas.metas.blogs,
+    nav_products: constant.products,
+    nav_categories: constant.categories,
+    blogs: blogs,
+    page_count: page_count,
+    cur_page: page,
+    recentPosts: recentPosts,
+  });
+});
+
 app.post("/blogs", async function (req, res) {
   var blogs = await query.searchBlog(req.body.title);
   var val1 = await query.fetchAllBlogs();
@@ -332,7 +362,7 @@ app.post("/blogs", async function (req, res) {
     let timestamp = blogs[i]._id.getTimestamp();
     blogs[i].date = moment(timestamp).format("DD-MM-YY");
   }
-
+  console.log("Hello");
   res.render("blogsHome", {
     nav_products: constant.products,
     nav_categories: constant.categories,
