@@ -53,6 +53,14 @@ const metas = {
     title_content: "",
     description: "",
   },
+  Careers: {
+    title_content: "careers at KVAR",
+    description: "careers at KVAR Technologies Private Limited",
+  },
+  Career: {
+    title_content: "",
+    description: "",
+  },
 };
 
 module.exports = {

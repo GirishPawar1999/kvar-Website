@@ -1,0 +1,46 @@
+
+extends ./header.pug
+block append head 
+  link(href='/public/css/viewProducts.css', rel='stylesheet')
+block content
+  .container-fluid
+   h2 UPDATE Career
+   <br>
+   form(action="/admin/career" method="POST")
+     <div class="input-group">
+        <div class="form-outline">
+            <input name="title" type="search" id="form1" class="form-control" />
+            <label class="form-label" for="title">Search by career Title</label>
+        </div>
+        <button style="height:40px; margin-left:5px;" type="submit" class="btn btn-primary">
+            <i class="fas fa-search"></i>
+        </button>
+     </div>
+   <br>
+   if careers != null 
+      table.table.table-hover
+        tr 
+            th career Title
+            th career type
+            th View Career
+        each career in careers
+            tr 
+                td 
+                    = career.title
+                td 
+                    = career.type
+                td 
+                    a(href="/admin/viewCareers/"+career._id) View
+   else
+      p No careers found
+  -var n = 1
+  div.flex-container
+    p Pages:
+    while n <= page_count
+      if n == cur_page
+        a(href="viewCareers?page="+n id="active")
+          = n
+      else 
+        a(href="viewCareers?page="+n)
+          = n
+      -n = n + 1

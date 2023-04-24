@@ -1,0 +1,66 @@
+extends ./header.pug
+block append head 
+  link(href='/public/css/addProduct.css', rel='stylesheet')
+block content
+      .container-fluid
+         h1 Edit Careers
+         //enctype="multipart/form-data"
+         form(action = "/admin/viewcareers/"+careers._id+"/edit?_method=PUT" enctype="multipart/form-data" method = "POST" id="product")
+            div(style="padding:50px;")
+               div.form-group
+                  label(for = "title") Careers Title: 
+                  input(class ="form-control" name = "careers[title]" value=careers.title required)
+               div.form-group
+                  label(for = "type") Careers Type: 
+                  input(class ="form-control" name = "careers[type]" value=careers.type required)
+               div.form-group
+                  label(for = "salary") Careers Salary: 
+                  input(class ="form-control" name = "careers[Salary]" value=careers.Salary required)
+               div.form-group
+                  -let paras = "";
+                  each para, index in careers.description
+                     if index !== careers.description.length-1
+                        - paras = paras + para + "=" 
+                     else 
+                        - paras = paras + para
+                  label(for = "description") Blog Description: 
+                  textarea(class ="form-control" name = "careers[description]" required)
+                    = paras
+               div.form-group
+                  -let paras1 = "";
+                  each para, index in careers.responsibility
+                     if index !== careers.responsibility .length-1
+                        - paras1 = paras1 + para + "=" 
+                     else 
+                        - paras1 = paras1 + para
+                  label(for = "responsibility") Blog Responsibility : 
+                  textarea(class ="form-control" name = "careers[responsibility]" required)
+                    = paras1
+               div.form-group
+                  -let paras2 = "";
+                  each para, index in careers.qualification
+                     if index !== careers.qualification .length-1
+                        - paras2 = paras2 + para + "=" 
+                     else 
+                        - paras2 = paras2 + para
+                  label(for = "qualification") Blog Qualification : 
+                  textarea(class ="form-control" name = "careers[qualification]" required)
+                    = paras2
+               div.form-group
+                  label(for = "Vacancy") Blog Vacancyr: 
+                  input(class ="form-control" name = "careers[Vacancy]" value=careers.Vacancy required)
+               div.form-group 
+                  label(for ="image") Replace Image: 
+                  input(class ="form-control" type = "file" name="image") 
+               br
+               div.form-group 
+                  input(type = "hidden" value=careers.image[0].filename name="careers[image]") 
+               br
+               div(class="mb-3")
+                  -count = 0
+                  each image in careers.image
+                     div(class="img-thumb")
+                        img(src="/public/Careers/"+image.filename)
+                     p Careers Image
+                     -count += 1
+               button(type = "submit") Update Careers

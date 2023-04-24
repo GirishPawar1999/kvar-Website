@@ -863,5 +863,134 @@ module.exports = {
       return [x, Dev];
     }
   },
+  //==job
+  addCareers: async function addCareers(Careers) {
+    let res = null;
+    try {
+      await client.connect();
+
+      res = await client.db("kvar").collection("careers").insertOne(Careers);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      await client.close();
+      console.log(res);
+      return Careers._id;
+    }
+  },
+  fetchAllCareers: async function fetchAllCareers() {
+    let Careers = null;
+    try {
+      await client.connect();
+
+      let res = await client
+        .db("kvar")
+        .collection("careers")
+        .find()
+        .sort({ _id: -1 })
+        .toArray();
+      Careers = res;
+    } catch (err) {
+      console.log(err);
+    } finally {
+      await client.close();
+      return Careers;
+    }
+  },
+
+  fetchCareers: async function fetchCareers(id) {
+    var result = null;
+    try {
+      await client.connect();
+      result = await client.db("kvar").collection("careers").findOne(ObjectId(id));
+      console.log(result);
+    } catch (e) {
+      console.log(e);
+      result = null;
+    } finally {
+      await client.close();
+      return result;
+    }
+  },
+
+  searchCareers: async function searchCareers(title) {
+    var x = true;
+    try {
+      // Connect to the MongoDB cluster
+      await client.connect();
+
+      // Make the appropriate DB calls
+      Dev = await client
+        .db("kvar")
+        .collection("careers")
+        .find({ title: { $regex: title, $options: "i" } })
+        .toArray();
+      x = Careers;
+    } catch (e) {
+      console.error(e);
+      x = false;
+    } finally {
+      await client.close();
+      return x;
+    }
+  },
+
+  updateCareers: async function updateCareers(id, Careers) {
+    var val = true;
+
+    try {
+      await client.connect();
+      result = await client
+        .db("kvar")
+        .collection("careers")
+        .findOneAndUpdate(
+          { _id: ObjectId(id) },
+          {
+            $set: {
+              title: Careers.title,
+              type: Careers.type,
+              salary: Careers.salary,
+              description: Careers.description,
+              responsibility: Careers.responsibility,
+              qualification: Careers.qualification,
+              Vacancy: Careers.Vacancy,
+              image: Careers.image,
+              
+              //,
+            },
+          }
+        );
+    } catch (e) {
+      console.log(e);
+      val = false;
+    } finally {
+      await client.close();
+      return val;
+    }
+  },
+
+  deleteCareers: async function deleteCareers(id) {
+    var x = true;
+
+    try {
+      // Connect to the MongoDB cluster
+      await client.connect();
+
+      // Make the appropriate DB calls
+      careers = await client.db("kvar").collection("careers").findOne(ObjectId(id));
+      result = await client
+        .db("kvar")
+        .collection("careers")
+        .findOneAndDelete({ _id: ObjectId(id) });
+    } catch (e) {
+      console.error(e);
+      x = false;
+    } finally {
+      await client.close();
+      return [x, careers];
+    }
+  },
 };
+
+
 

@@ -50,6 +50,10 @@ block content
                    a(href="/public/brochures/"+product.brochure download)
                      i.fa.fa-download
                      |  Download Brochure
+                 button.btn
+                   a(href="/authBrouchure/"+product.brochure)
+                     i.fa.fa-download
+                     |  Download Brochure2
              p
                 = product.description
          table
@@ -150,5 +154,6 @@ block content
                 each line in x
                   li(align='center')
                     = line
+
 
       

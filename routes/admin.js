@@ -80,6 +80,17 @@ storage6 = multer.diskStorage({
     );
   },
 });
+storage7 = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, "./public/Careers");
+  },
+  filename: function (req, file, callback) {
+    callback(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
 upload = multer({ storage: storage });
 upload1 = multer({ storage: storage1 });
 upload2 = multer({ storage: storage2 });
@@ -87,6 +98,7 @@ upload3 = multer({ storage: storage3 });
 upload4 = multer({ storage: storage4 });
 upload5 = multer({ storage: storage5 });
 upload6 = multer({ storage: storage6 });
+upload7 = multer({ storage: storage7 });
 bcrypt = require("bcrypt");
 query = require("../DBqueries");
 constant = require("../constant");
@@ -695,7 +707,7 @@ router.get("/viewDev/:id",requireLogin,async function(req,res){
   //res.send(dev);
 });
 
-//done
+
 router.get("/viewDev",requireLogin,async function(req,res){
   let page = 1;
   if (req.query.page) {
@@ -771,6 +783,117 @@ router.delete("/viewDev/:id/delete", requireLogin,async function (req, res) {
 //===
 //===testimonials
 //===careers
+
+router.get("/addCareers",  requireLogin, async function (req, res) {
+  res.render("admin/addCareers", {
+    insertRequest: false,
+  });
+});
+
+router.post("/addCareers", requireLogin,upload7.array("image"),async function(req,res){
+  let Careers = req.body.career;
+    //console.log(req.body);
+    Careers.description = seperateParagraphs(Careers.description);
+    Careers.responsibility = seperateParagraphs(Careers.responsibility);
+    Careers.qualification = seperateParagraphs(Careers.qualification);
+    Careers.image = req.files.map((f) => ({
+      url: f.path,
+      filename: f.filename,
+    }));
+  //let temp={title:req.body.title,description:req.body.description,image:image};
+  id = await query.addCareers(Careers);
+  //console.log(req.body);
+  res.redirect("viewCareers/" + id);
+  //res.send("ok");
+});
+
+router.get("/viewCareers/:id", requireLogin,async function(req,res){
+  let career= await query.fetchCareers(req.params.id);
+  console.log(career);
+  res.render("admin/viewcareers", {
+    updateRequest: false,
+    career: career,
+  });
+  //res.send(dev);
+});
+
+router.get("/viewCareers", requireLogin,async function(req,res){
+  let page = 1;
+  if (req.query.page) {
+    page = req.query.page;
+  }
+  var val= await query.fetchAllCareers();
+  var page_count = Math.ceil(val.length / 3);
+
+  let careers = val.slice(page * 10 - 10, page * 10);
+  console.log(careers);
+  res.render("admin/careerHome", {
+    careers: careers,
+    page_count: page_count,
+    cur_page: page,
+  });
+  
+});
+
+router.get("/viewCareers/:id/edit", requireLogin,async function (req, res) {
+  var val = await query.fetchCareers(req.params.id);
+  console.log(val);
+  res.render("admin/editcareers", {
+    updateRequest: false,
+    careers: val,
+  });
+});
+
+router.put(
+  "/viewCareers/:id/edit",
+  requireLogin,
+  upload7.array("image"),
+  async function (req, res) {
+    var Careers = req.body.careers;
+    let deleteImage = false;
+    Careers.description = seperateParagraphs(Careers.description);
+    Careers.responsibility = seperateParagraphs(Careers.responsibility);
+    Careers.qualification = seperateParagraphs(Careers.qualification);
+    Careers.image = [{ filename: Careers.image }];
+    if (req.files.length > 0) {
+      uploadImages = req.files.map((f) => ({
+        url: f.path,
+        filename: f.filename,
+      }));
+      deleteImage = Careers.image[0].filename;
+      Careers.image = uploadImages;
+    }
+    var val = await query.updateCareers(req.params.id, Careers);
+    res.redirect("../../viewcareers/" + req.params.id);
+    if (val && deleteImage) {
+      fs.unlink("public/Careers/" + deleteImage, (err) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+      });
+    }
+  }
+);
+
+router.delete("/viewCareers/:id/delete", requireLogin,async function (req, res) {
+  var val = await query.deleteCareers(req.params.id);
+  //res.redirect("../../blogs");
+  if (val[0] == true) {
+    val[1].image.forEach((image) => {
+      console.log("public/Careers/" + image.filename);
+      fs.unlink("public/Careers/" + image.filename, (err) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+      });
+    });
+  }
+  res.redirect("../../viewcareers");
+});
+
+
 //---blogs
 router.get("/addBlog", requireLogin, async function (req, res) {
   res.render("admin/addBlog", {

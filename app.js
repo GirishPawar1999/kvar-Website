@@ -99,7 +99,7 @@ app.get("/products/:id", async function (req, res) {
 });
 
 app.post("/products/:id", async function (req, res) {
-  console.log("Send mail");
+  console.log(req.body);
 });
 
 app.get("/contact", function (req, res) {
@@ -187,6 +187,14 @@ app.get("/brochures", function (req, res) {
   });
 });
 
+app.get("/authBrouchure/:id", async function (req, res) {
+  console.log("GET");
+  console.log(req.params.id);
+  res.render("authbro.pug", {
+
+  });
+});
+
 
 
 app.get("/readbrochures/:brochure", function (req, res) {
@@ -256,33 +264,59 @@ app.get("/NewDev/:id", async function (req, res) {
   });
 });
 
-app.get("/blogs", async function (req, res) {
+app.get("/Careers", async function (req, res) {
   let page = 1;
   if (req.query.page) {
     page = req.query.page;
   }
-  var val = await query.fetchAllBlogs();
-  var page_count = Math.ceil(val.length / 3);
+  var val = await query.fetchAllCareers();
+  var page_count = Math.ceil(val.length / 5);
 
-  let blogs = val.slice(page * 3 - 3, page * 3);
+  let careers = val.slice(page * 5 - 5, page * 5);
   let recentPosts = val.slice(0, 5);
-  for (let i = 0; i < blogs.length; i++) {
-    let timestamp = blogs[i]._id.getTimestamp();
-    blogs[i].date = moment(timestamp).format("DD-MM-YY");
+  for (let i = 0; i < careers.length; i++) {
+    let timestamp = careers[i]._id.getTimestamp();
+    careers[i].date = moment(timestamp).format("DD-MM-YY");
   }
   for (let i = 0; i < recentPosts.length; i++) {
     let timestamp = recentPosts[i]._id.getTimestamp();
     recentPosts[i].date = moment(timestamp).format("DD-MM-YY");
   }
 
-  res.render("blogsHome", {
-    meta: metas.metas.blogs,
+  res.render("Careers", {
+    meta: metas.metas.Careers,
     nav_products: constant.products,
     nav_categories: constant.categories,
-    blogs: blogs,
+    careers: careers,
     page_count: page_count,
     cur_page: page,
+  });
+});
+
+app.get("/Careers/:id", async function (req, res) {
+  let rand = randomNumber(0, 9);
+  let career = await query.fetchCareers(req.params.id);
+  let timestamp = career._id.getTimestamp();
+  career.date = moment(timestamp).format("DD-MM-YY");
+  console.log("Data");
+  console.log(career);
+  var val1 = await query.fetchAllCareers();
+  let recentPosts = val1.slice(0, 5);
+  for (let i = 0; i < recentPosts.length; i++) {
+    let timestamp = recentPosts[i]._id.getTimestamp();
+    recentPosts[i].date = moment(timestamp).format("DD-MM-YY");
+  }
+  metas.metas.Career.title_content = career.name;
+  metas.metas.Career.description = career.description[0];
+  res.render("Career", {
+    meta: metas.metas.Career,
+    nav_products: constant.products,
+    nav_categories: constant.categories,
+    career: career,
     recentPosts: recentPosts,
+    nav: 4,
+    question: questions[rand].q,
+    questionIndex: rand,
   });
 });
 
@@ -329,7 +363,7 @@ app.get("/blogs/:id", async function (req, res) {
     blog: blog,
     recentPosts: recentPosts,
   });
-});
+}); 
 
 app.post("/sendEmail", async function (request, response) {
   //console.log("request received")
@@ -362,6 +396,92 @@ app.post("/sendEmail", async function (request, response) {
     response.statusMessage = "Incorrect answer";
     response.status(400).end();
   }
+});
+
+app.post("/sendEmail2", async function (request, response) {
+  console.log("request received")
+  var answer = request.body.answer;
+  var index = request.body.questionIndex;
+  var resume = request.body.resume;
+  if (questions[index].a.toLowerCase() == answer.toLowerCase()) {
+    var mailOptions = {
+      from: process.env.KVAR_FROM,
+      to: process.env.KVAR_TO,
+      subject: request.body.subject,
+      
+      text:
+        "Job Seeker's Name: " +
+        request.body.name +
+        "\n\n" +
+        "Job Seeker's Email: " +
+        request.body.email +
+        "\n\n" +
+        "Job Seeker's message: " +
+        request.body.message,
+      attachments: [  
+        {   
+            filename: "resume.pdf",    
+            contents: resume,   
+            contentType: 'application/pdf',    
+        }   
+        ] 
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+    response.status(200).send("Email Send. We will contact u soon :)");
+  } else {
+    response.statusMessage = "Incorrect answer";
+    response.status(400).end();
+  }
+});
+
+app.post("/sendEmail3", async function (request, response) {
+    var mailOptions = {
+      from: process.env.KVAR_FROM,
+      to: process.env.KVAR_TO,
+      subject: 'Subscribed to New Developement',
+      text:
+        "Name: " +
+        request.body.name +
+        "\n\n" +
+        "Email: " +
+        request.body.email +
+        "\n\n" +
+        "PhoneNo: " +
+        request.body.phoneNo +
+        "\n\n" +
+        "Company Name: " +
+        request.body.CompanyName,
+
+    };
+    transporter.sendMail(mailOptions, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+    response.status(200).send("Email Send. We will contact u soon :)");
+    var mailOptions2 = {
+      from: process.env.KVAR_FROM,
+      to: request.body.email,
+      subject: 'Thanks for Subscribing to KVAR New Developement',
+      text: 'Thanks for Subscribing to KVAR New Developement. For more updates Stay tuned :)'
+    };
+    transporter.sendMail(mailOptions2, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent: " + info.response);
+      }
+    });
+    response.status(200).send("Email Send. We will contact u soon :)");
+  
 });
 
 app.get("*", function (req, res) {

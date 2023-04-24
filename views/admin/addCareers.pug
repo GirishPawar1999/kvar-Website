@@ -1,0 +1,43 @@
+extends ./header.pug
+block append head 
+  link(href='/public/css/addProduct.css', rel='stylesheet')
+block content
+  .container-fluid
+    
+    form(action = "/admin/addCareers", enctype="multipart/form-data" method = "POST" id="product")
+     div(style="padding:50px;")
+      h2 ADD NEW Careers
+      br
+      div.form-group
+         label(for = "title") Job Title
+         input(class ="form-control" name = "career[title]" required)
+      div.form-group
+         label(for = "type") Job Type
+         input(class ="form-control" name = "career[type]" required)
+      div.form-group
+         label(for = "salary") Job Salary: 
+         input(class ="form-control" name = "career[Salary]" required)
+      div.form-group
+         label(for = "description") Job Description
+         textarea(class ="form-control" name = "career[description]" placeholder="example: \n warranty=1 year \n brand=kvartech \n x=y" required)
+      div.form-group
+         label(for = "responsibility") Job Responsibility 
+         textarea(class ="form-control" name = "career[responsibility]" placeholder="example: \n warranty=1 year \n brand=kvartech \n x=y" required) 
+      div.form-group
+         label(for = "qualification") Job Qualification 
+         textarea(class ="form-control" name = "career[qualification]" placeholder="example: \n warranty=1 year \n brand=kvartech \n x=y" required) 
+      
+      div.form-group
+         label(for = "vacancy") Job Vacancy 
+         textarea(class ="form-control" style="height:100px;" name = "career[Vacancy]" required)
+      div.form-group
+         label(for ="image") Upload Image  
+         input(type = "file" name="image" required) 
+      
+      button(class="btn btn-primary" type = "submit") Add JOB
+      br
+    if insertRequest 
+      if queryPassed
+         p Product Inserted Successfully
+      else 
+         p There is some error in inserting this product, Please try again
