@@ -92,7 +92,7 @@ block content
                             a(href='/NewDev/'+Dev._id)
                                     = Dev.title
                           p.card-text
-                            = Dev.description[0].substr(0,250) + "..."
+                            = Dev.description[0].substr(0,50) + "..."
                           .read-more
                             a.btn.btn-primary(href='/NewDev/'+Dev._id) Read
                 .blog-pagination

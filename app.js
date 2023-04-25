@@ -432,6 +432,7 @@ app.post("/sendEmail2", async function (request, response) {
   console.log("request received")
   var answer = request.body.answer;
   var index = request.body.questionIndex;
+  const file = request.file;
   var resume = request.body.resume;
   if (questions[index].a.toLowerCase() == answer.toLowerCase()) {
     var mailOptions = {
@@ -450,9 +451,9 @@ app.post("/sendEmail2", async function (request, response) {
         request.body.message,
       attachments: [  
         {   
-            filename: "resume.pdf",    
-            contents: resume,   
-            contentType: 'application/pdf',    
+            filename: file.originalname,
+            content: request.file.buffer,
+            contentType: request.file.mimetype ,  
         }   
         ] 
     };
@@ -474,7 +475,7 @@ app.post("/sendEmail3", async function (request, response) {
     var mailOptions = {
       from: process.env.KVAR_FROM,
       to: process.env.KVAR_TO,
-      subject: 'Subscribed to New Developement',
+      subject: 'Subscribed to New Development',
       text:
         "Name: " +
         request.body.name +
@@ -500,8 +501,8 @@ app.post("/sendEmail3", async function (request, response) {
     var mailOptions2 = {
       from: process.env.KVAR_FROM,
       to: request.body.email,
-      subject: 'Thanks for Subscribing to KVAR New Developement',
-      text: 'Thanks for Subscribing to KVAR New Developement. For more updates Stay tuned :)'
+      subject: 'Thanks for Subscribing to KVAR New Development',
+      text: 'Thanks for Subscribing to KVAR New Development. For more updates Stay tuned :)'
     };
     transporter.sendMail(mailOptions2, function (error, info) {
       if (error) {

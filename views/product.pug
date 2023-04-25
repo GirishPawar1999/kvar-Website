@@ -50,10 +50,6 @@ block content
                    a(href="/public/brochures/"+product.brochure download)
                      i.fa.fa-download
                      |  Download Brochure
-                 button.btn
-                   a(href="/authBrouchure/"+product.brochure)
-                     i.fa.fa-download
-                     |  Download Brochure2
              p
                 = product.description
          table
@@ -74,6 +70,10 @@ block content
   width: 750px;
   border-collapse: collapse;
   margin:50px auto;
+  }
+  .container.Giru {
+    padding: 0 50px;
+    
   }
   /* Zebra striping */
   tr:nth-of-type(odd) {
@@ -133,27 +133,36 @@ block content
   color: #000;
   font-weight: bold;
   }
+  
+  
   }
-
+  
  if product.models
   section#portfolio-details.portfolio-details
-   .row.gy-4.portfolio-container(data-aos='fade-up' data-aos-delay='200')
-    .container
-     each model in product.models
-      .col-lg-4.col-md-6.portfolio-item.filter-app
-        center 
-          img.img-fluid(src='/public/img/'+model.images[0].filename alt='' width='250' height='500' )
-          br
-          center 
-            .col-lg-10
-              .portfolio-description(align='center')
-                h3 
-                  = model.name
-                -let x = model.description.split("\n")
-                ul
-                each line in x
-                  li(align='center')
-                    = line
+   header.section-header
+   .row.gy-3.icon-box(data-aos='fade-up' data-aos-delay='200')
+     .container.Giru
+      .row.gy-4
+       each model in product.models
+        .col-lg-3.col-md-3(data-aos='fade-up' data-aos-delay='200')
+          .card
+           br
+           center 
+            img.img-fluid(src='/public/img/'+model.images[0].filename alt='' width='250' height='500' )
+            br
+            center 
+              .col-lg-10
+               .row.gy-4
+                .portfolio-description(align='center')
+                  h3 
+                    = model.name
+                  .card-body
+                    p.card-text
+                    -let x = model.description.split("\n")
+                    each line in x
+                      p(align='left')
+                        = line
+                          
 
 
       
