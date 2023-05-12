@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en-us">
+
+<head>
+    <meta charset="utf-8">
+    <title>Ola Email Unsubscribe</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta name="keywords" content="Ola Email Unsubscribe">
+    <meta name="keyphrase" content="Ola Email Unsubscribe" />
+    <meta name="description"
+        content="Ola Cabs offers to book rideshare nearby your location for best fares. For best rideshare service at lowest fares, say Ola!">
+    <link rel="shortcut icon" href="/webstatic/img/favicon.ico">
+    <link rel="stylesheet" href="/webstatic/css/bootstrap.css">
+    <link rel="stylesheet" href="/webstatic/css/style.css">
+    <link rel="stylesheet" href="/webstatic/css/slick.css">
+    <link rel="stylesheet" href="/webstatic/css/gb.css">
+    <style>
+        body {
+            height: 100vh;
+        }
+
+        .unsub-msg {
+            height: 53vh;
+            font-size: 18px;
+            padding: 50px 0;
+        }
+
+        .email-container {
+            padding: 50px 0;
+        }
+
+        .email-header {
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e4e6e7;
+        }
+
+        .email-header h2 {
+            padding: 10px;
+            font-size: 24px;
+        }
+
+        .email-body h2 {
+            padding: 10px;
+            font-size: 32px;
+            color: tomato;
+        }
+
+        .submit-button {
+            padding: 10px 30px;
+            font-size: 28px;
+            color: #ffffff;
+            background: #1ca9df;
+            border-radius: 6px;
+            border: none;
+            margin: 10px;
+        }
+
+        p {
+            font-size: 18px;
+            padding: 20px 0;
+        }
+
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            -ms-appearance: none;
+            appearance: none;
+            outline: 0;
+            box-shadow: none;
+            border: 0 !important;
+            background: #ffffff;
+            background-image: none;
+        }
+
+        /* Remove IE arrow */
+        select::-ms-expand {
+            display: none;
+        }
+
+        /* Custom Select */
+        .select {
+            position: relative;
+            display: flex;
+            width: 310px;
+            height: 3em;
+            line-height: 3;
+            background: #ffffff;
+            overflow: hidden;
+            border: 1px solid #2c3e50;
+            border-radius: .25em;
+            margin: 0 auto;
+        }
+
+        select {
+            flex: 1;
+            padding: 0 .5em;
+            color: #2c3e50;
+            cursor: pointer;
+        }
+
+        /* Arrow */
+        .select::after {
+            content: '\25BC';
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding: 0 1em;
+            /* background: #34495e; */
+            cursor: pointer;
+            pointer-events: none;
+            -webkit-transition: .25s all ease;
+            -o-transition: .25s all ease;
+            transition: .25s all ease;
+        }
+
+        .select:hover::after {
+            color: tomato;
+        }
+
+        @media only screen and (max-width: 768px) {
+            .unsub-msg {
+                padding: 70px 16px;
+            }
+
+            .email-container {
+                padding: 70px 16px;
+            }
+        }
+    </style>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-20199135-12"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-20199135-12');
+    </script>
+
+</head>
+
+<body class="body-top-padding">
+    
+    <section>
+        <div class="max-width text-center">
+            <div class="email-container" id="email-container">
+                <center>
+                    <img src="https://kvartech.in/public/assets/img/KVAR_Website_Logo-07%20(1)-min.png" class="pc-img" width="20%"
+                        height="10%"
+                        alt="https://kvartech.in/" />
+                    <div class="email-body">
+                        <h2>Unsubscribe from our mailing list</h2>
+                        <p>To help us improve our services, we would be grateful if you could tell us why</p>
+                    
+                        <div class="select">
+                            <select name="reason" id="reason">
+                                <option value="0" selected disabled>Please select one reason</option>
+                                <option value="1">Your emails are not relevant to me</option>
+                                <option value="2">Your emails are too frequent</option>
+                                <option value="3">I don't remember signing up for this</option>
+                                <option value="4">I no longer want to receive these emails</option>
+                                <option value="5">The emails are spam and should be reported</option>
+                                <option value="6">Others</option>
+                            </select>
+                        </div>
+                        <br><br>
+                        <input type="text" class="select" id="fname" name="fname" placeholder="Enter your Subscribed Mail address"><br><br>
+                        <div><button class="submit-button">Unsubscribe</button></div>
+                        <p>Note: Your email address would be removed from the mailing list within 3 hrs.</p>
+                    </div>
+                </center>
+                
+
+            </div>
+            <div class="unsub-msg text-center" id="successMsg"></div>
+        </div>
+    </section>
+    <div class="body-overlay overlay-hide">
+    </div>
+
+    <!--script -->
+    <script src="/webstatic/js/jquery-3.2.1.min.js"></script>
+    <script src="/webstatic/js/bootstrap.min.js"></script>
+    <script src="/webstatic/js/slick.js"></script>
+    <script src="/webstatic/js/landing-main.js"></script>
+    <script src="/webstatic/js/current-device.min.js"></script>
+</body>
+
+</html>

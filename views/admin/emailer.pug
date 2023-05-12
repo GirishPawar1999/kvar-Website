@@ -1,0 +1,39 @@
+extends ./header.pug
+block append head 
+  link(href='/public/css/viewProducts.css', rel='stylesheet')
+block content
+   .container-fluid 
+    a(href="/admin/AddEmailerDb" style="background-color:green; color:white; padding:5px; border:2px solid black;") Add EmailerDb
+    br
+    br
+    if EmailerDb != null 
+      table.table.table-hover
+        tr 
+            th EmailerDb Name
+            th Delete EmailerDb
+            th Add to DataBase
+            th Download   
+        each EmailerDB in EmailerDb
+            tr 
+                td 
+                    a(href="/public/EmailerDb/"+EmailerDb download) 
+                        = EmailerDB
+                td 
+                    form(action = 'emailer/'+EmailerDB+'/delete?_method=DELETE' enctype="multipart/form-data" method = "POST")
+                        button(type="submit") Delete EmailerDb
+                td 
+                    form(action = 'emailer/'+EmailerDB+'/upload?_method=GET' enctype="multipart/form-data" method = "GET")
+                        button(type="submit") Upload EmailerDb
+                td 
+                    button.btn
+                        a(href="/public/EmailersDb/"+EmailerDB download)
+                            i.fa.fa-download
+                            = " Download " +EmailerDB
+      form(action = 'emailer/fetchAll' enctype="multipart/form-data" method = "GET")
+        button(type="submit") Export EmailerDb
+      br
+      br
+      p 
+        =notes
+    else
+      p No EmailerDb found

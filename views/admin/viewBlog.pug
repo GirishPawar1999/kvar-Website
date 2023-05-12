@@ -6,6 +6,13 @@ block content
         a(href="/admin/blogs/"+blog._id+"/edit") Edit Blog
         form(action = "/admin/blogs/"+blog._id+"/delete?_method=DELETE" enctype="multipart/form-data" method = "POST")
             button(type="subbmit") Delete Blog
+        br
+        form(action = "/admin/blogs/"+blog._id+"/sendMAil" enctype="multipart/form-data" method = "POST")
+            button(type="submit") Send MAil
+        br
+        p 
+            = "Email Status: " + blog.status
+        br
         h2 
             = "Title: " + blog.title
         br

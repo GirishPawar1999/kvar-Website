@@ -5,7 +5,14 @@ block content
     .container-fluid
         a(href="/admin/viewDev/"+blog._id+"/edit") Edit Dev
         form(action = "/admin/viewDev/"+blog._id+"/delete?_method=DELETE" enctype="multipart/form-data" method = "POST")
-            button(type="submit") Delete Blog
+            button(type="submit") Delete Development 
+        br
+        form(action = "/admin/viewDev/"+blog._id+"/sendMAil" enctype="multipart/form-data" method = "POST")
+            button(type="submit") Send MAil
+        br
+        p 
+            = "Email Status: " + blog.status
+        br
         h2 
             = "Title: " + blog.title
         br
@@ -48,7 +55,7 @@ block content
         </a>
         </div>
         br
-        h4 Blog Description
+        h4 Development  Description
         ul 
             each para in blog.description
                 li

@@ -1,0 +1,135 @@
+
+html(lang='en-us')
+  head
+    meta(charset='utf-8')
+    title KVAR Tech Email Unsubscribe
+    meta(name='viewport', content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no')
+
+    style.
+      body {
+      height: 100vh;
+      }
+      .unsub-msg {
+      height: 53vh;
+      font-size: 18px;
+      padding: 50px 0;
+      }
+      .email-container {
+      padding: 50px 0;
+      }
+      .email-header {
+      padding-bottom: 20px;
+      border-bottom: 1px solid #e4e6e7;
+      }
+      .email-header h2 {
+      padding: 10px;
+      font-size: 24px;
+      }
+      .email-body h2 {
+      padding: 10px;
+      font-size: 32px;
+      color: tomato;
+      }
+      .submit-button {
+      padding: 10px 30px;
+      font-size: 28px;
+      color: #ffffff;
+      background: #1ca9df;
+      border-radius: 6px;
+      border: none;
+      margin: 10px;
+      }
+      p {
+      font-size: 18px;
+      padding: 20px 0;
+      }
+      select {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      -ms-appearance: none;
+      appearance: none;
+      outline: 0;
+      box-shadow: none;
+      border: 0 !important;
+      background: #ffffff;
+      background-image: none;
+      }
+      /* Remove IE arrow */
+      select::-ms-expand {
+      display: none;
+      }
+      /* Custom Select */
+      .select {
+      position: relative;
+      display: flex;
+      width: 310px;
+      height: 3em;
+      line-height: 3;
+      background: #ffffff;
+      overflow: hidden;
+      border: 1px solid #2c3e50;
+      border-radius: .25em;
+      margin: 0 auto;
+      }
+      select {
+      flex: 1;
+      padding: 0 .5em;
+      color: #2c3e50;
+      cursor: pointer;
+      }
+      /* Arrow */
+      .select::after {
+      content: '\25BC';
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 0 1em;
+      /* background: #34495e; */
+      cursor: pointer;
+      pointer-events: none;
+      -webkit-transition: .25s all ease;
+      -o-transition: .25s all ease;
+      transition: .25s all ease;
+      }
+      .select:hover::after {
+      color: tomato;
+      }
+      @media only screen and (max-width: 768px) {
+      .unsub-msg {
+      padding: 70px 16px;
+      }
+      .email-container {
+      padding: 70px 16px;
+      }
+      }
+    // Global site tag (gtag.js) - Google Analytics
+  body.body-top-padding
+    section
+      .max-width.text-center
+        #email-container.email-container
+         form(action = "/unsubscribe", enctype="multipart/form-data" method = "POST")
+          center
+            img.pc-img(src='https://kvartech.in/public/assets/img/KVAR_Website_Logo-07%20(1)-min.png', width='20%', height='10%', alt='https://kvartech.in/')
+            .email-body
+              h2 Unsubscribe from our mailing list
+              p To help us improve our services, we would be grateful if you could tell us why
+              .select
+                select#reason(name='reason')
+                  option(value='0', selected='', disabled='') Please select one reason
+                  option(value='1') Your emails are not relevant to me
+                  option(value='2') Your emails are too frequent
+                  option(value='3') I don&apos;t remember signing up for this
+                  option(value='4') I no longer want to receive these emails
+                  option(value='5') The emails are spam and should be reported
+                  option(value='6') Others
+              br
+              br
+              input#email.select(type='text', name='email', placeholder='Enter your Subscribed Mail address')
+              br
+              br
+              div
+                button.submit-button Unsubscribe
+              p 
+               = "Note:" + data.sts 
+        #successMsg.unsub-msg.text-center
+    .body-overlay.overlay-hide

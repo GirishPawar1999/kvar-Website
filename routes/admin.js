@@ -5,7 +5,20 @@ const { model } = require("mongoose");
 multer = require("multer");
 router = express.Router();
 path = require("path");
+const objectstocsv =require('objects-to-csv');
 fs = require("fs");
+const Handlebars = require('handlebars');
+nodemailer = require("nodemailer");
+transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: process.env.KVAR_FROM,
+    pass: process.env.PASS,
+  },
+});
+const { parse } = require("csv-parse");
+
+
 storage = multer.diskStorage({
   destination: function (req, file, callback) {
     callback(null, "./public/img");
@@ -91,6 +104,18 @@ storage7 = multer.diskStorage({
     );
   },
 });
+
+storage8 = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, "./public/EmailersDb");
+  },
+  filename: function (req, file, callback) {
+    callback(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
 upload = multer({ storage: storage });
 upload1 = multer({ storage: storage1 });
 upload2 = multer({ storage: storage2 });
@@ -99,9 +124,12 @@ upload4 = multer({ storage: storage4 });
 upload5 = multer({ storage: storage5 });
 upload6 = multer({ storage: storage6 });
 upload7 = multer({ storage: storage7 });
+upload8 = multer({ storage: storage8 });
 bcrypt = require("bcrypt");
 query = require("../DBqueries");
 constant = require("../constant");
+
+const EmailersDir = path.join(__dirname, "../public/EmailersDb");
 const directoryPath = path.join(__dirname, "../public/brochures");
 const galleryPathImages = path.join(__dirname, "../public/gallery/imgs");
 const galleryPathVideos = path.join(__dirname, "../public/gallery/vids");
@@ -684,22 +712,35 @@ router.get("/addDev", requireLogin, async function (req, res) {
 
 router.post("/addDev",requireLogin,upload6.array("image"),async function(req,res){
   let Dev = req.body.Dev;
-    //console.log(req.body);
+  const DevEmail={};
+    console.log(Dev);
     Dev.description = seperateParagraphs(Dev.description);
     Dev.image = req.files.map((f) => ({
       url: f.path,
       filename: f.filename,
     }));
+  DevEmail.title=Dev.title;
+  DevEmail.STS=false;
+  console.log("EMAIL STS");
+  console.log(DevEmail);
   //let temp={title:req.body.title,description:req.body.description,image:image};
-  id = await query.addDev(Dev);
-  //console.log(req.body);
+  id = await query.addDev(Dev);  
+  temp = await query.addEmailerSTS(DevEmail); 
   res.redirect("viewDev/" + id);
 });
 
 //View Development
 router.get("/viewDev/:id",requireLogin,async function(req,res){
   let dev= await query.fetchDev(req.params.id);
+  var findSTS = await query.fetchEmailSTS(dev.title);
+  console.log("Emailer db");
+  console.log(findSTS);
   console.log(dev);
+  if(findSTS.STS){
+    dev.status="Email Already Send :)";
+  }else{
+    dev.status="Email not Send :(";
+  }
   res.render("admin/viewDev", {
     updateRequest: false,
     blog: dev,
@@ -763,6 +804,64 @@ router.put(
     }
   }
 );
+
+router.post("/viewDev/:id/sendMAil", requireLogin,async function (req, res) {
+  console.log("Send Mail");
+  let batchSize=200;
+  let cnt =0 ;
+  var emailList=[];
+  let dev= await query.fetchDev(req.params.id);
+  console.log(dev);
+  var findSTS = await query.fetchEmailSTS(dev.title);
+  console.log("Emailer db");
+  console.log(findSTS);
+
+  var valfind = await query.fetchAllEmailers();
+  
+  var EmailStatus;
+  //for loop to attach 200 emailers in bbc
+  let x = valfind.length;
+  var subject ="KVAR Tech's New Development:"+ dev.title;
+  var hyperlink="https://kvartech.in/NewDev/"+req.params.id;
+  var imagePath="https://kvartech.in/public/Dev/"+dev.image.filename;
+  var title ="New Development"
+  let tpp=0;
+  if(x<200){
+      tpp=x;
+    }else{
+      tpp=200;
+    }
+  for(let i=0;i<x ;i=i+tpp){
+    //batchIndex,batchSize,emailIds
+    let tp=0;
+    if(x<200){
+      tp=x;
+    }else{
+      tp=200;
+    }
+    for(let j=0;j<tp;j++){
+      emailList.push(valfind[j].Email);
+    }
+    console.log(emailList);
+    let emailIds =  getNextBatch(cnt,batchSize,emailList);
+    SendHtmlMail(emailIds,subject,dev.title,imagePath,dev.description[0].substr(0,180),hyperlink,title);
+    cnt++;
+    emailList.splice(0, 200);
+  }
+  findSTS.STS=true;
+  if(findSTS.STS){
+    dev.status="Email Already Send :)";
+  }else{
+    dev.status="Email not Send :(";
+  }
+  temp = await query.updateEmailSTS(findSTS);
+  res.render("admin/viewDev", {
+    updateRequest: false,
+    blog: dev,
+  });
+  
+});
+
 
 router.delete("/viewDev/:id/delete", requireLogin,async function (req, res) {
   var val = await query.deleteDev(req.params.id);
@@ -892,8 +991,128 @@ router.delete("/viewCareers/:id/delete", requireLogin,async function (req, res) 
   }
   res.redirect("../../viewcareers");
 });
+//---Emailers DataBase
+router.get("/AddEmailerDb", requireLogin, async function (req, res) {
+  res.render("admin/addEmailer", {
+    type: "Emailers DB",
+    link: "/admin/AddEmailerDb",
+  });
+});
+
+let notes = "";
+
+router.get("/emailer/:name/upload",  async function (req, res) {
+  var buf2;
+  var dataTwo = [];
+  notes = "Adding data to DataBase,Pls Wait :)";
+  //console.log(req.params.name);
+  res.redirect("/admin/emailer");
+  //read csv
+  var valfind = await query.fetchAllEmailers();
+  console.log("find relay");
+  console.log(valfind);
+  let bool = false;
+  const reader = fs.createReadStream("public/EmailersDb/" + req.params.name);
+  reader.pipe(parse({delimiter: ',', from_line: 2 }))
+  .on('data', async (row) => {
+      console.log("Row data:");
+      console.log(row);
+        for(let i=0;i<valfind.length;i++){
+          
+          if(valfind[i].CompanyName == row[0] && valfind[i].Email == row[1] && valfind[i].Contact == row[2] && valfind[i].Subscribe == row[3]){
+            bool =true;
+            console.log("match found");
+            break;
+          }else{
+            console.log("not match found");
+            bool =false;
+          }
+          
+        }
+        if(!bool){
+          let stock ={CompanyName:row[0],Email:row[1],Contact:row[2],Subscribe:row[3]};
+          dataTwo.push(stock); 
+        }
+        
+    
+  })
+
+  reader.on("end", async ()=> {
+      
+      console.log("finished"); 
+      
+      const jsonString = JSON.stringify(dataTwo);
+
+      // Convert the JSON string back to an object
+      const newObj = JSON.parse(jsonString);
+      console.log(newObj);
+
+      var val = await query.addEmailers(newObj);
+      
+      
+  })
+  
+  reader.on("error", function (error) {
+      console.log(error.message);
+  });
+  
+});
+
+router.get("/emailer/fetchAll", requireLogin, async function (req, res) {
+  console.log("Export CSV");
+  var valfind = await query.fetchAllEmailers();
+  console.log(valfind);
+  const withoutid = valfind.map(({_id, ...rest}) => rest)
+  const csv = new objectstocsv(withoutid.reverse());
+  var path= "./EmailersDB.csv";
+  await csv.toDisk(path);
+    
+    return res.download(path,() =>{
+        fs.unlinkSync(path)
+    });
+  
+});
 
 
+
+router.delete("/emailer/:name/delete", requireLogin, function (req, res) {
+  console.log(req.params.name);
+  fs.unlink("public/EmailersDb/" + req.params.name, (err) => {
+    if (err) {
+      console.error(err);
+    }
+    res.redirect("/admin/emailer");
+  });
+});
+
+router.post(
+  "/AddEmailerDb",
+  requireLogin,
+  upload8.array("EmailerDb"),
+  function (req, res) {
+    res.redirect("/admin/emailer");
+  }
+);
+
+router.get("/emailer", requireLogin, function (req, res) {
+  fs.readdir(EmailersDir, function (err, files) {
+    //handling error
+    let brochures = [];
+    if (err) {
+      return console.log("Unable to scan directory: " + err);
+    }
+    //listing all files using forEach
+    files.forEach(function (file) {
+      // Do whatever you want to do with the file
+      brochures.push(file);
+    });
+    res.render("admin/emailer", {
+      EmailerDb: brochures,
+      notes:notes,
+    });
+    notes=""
+  });
+});
 //---blogs
 router.get("/addBlog", requireLogin, async function (req, res) {
   res.render("admin/addBlog", {
@@ -906,6 +1125,7 @@ router.post(
   requireLogin,
   upload5.array("image"),
   async function (req, res) {
+    const DevEmail={};
     let blog = req.body.blog;
     console.log(req.body);
     blog.description = seperateParagraphs(blog.description);
@@ -914,6 +1134,11 @@ router.post(
       filename: f.filename,
     }));
     let id = await query.addBlog(blog);
+    DevEmail.title=blog.title;
+    DevEmail.STS=false;
+    console.log("EMAIL STS");
+    console.log(DevEmail);
+    temp = await query.addEmailerSTS(DevEmail); 
     res.redirect("blogs/" + id);
   }
 );
@@ -945,7 +1170,14 @@ router.post("/blogs", requireLogin, async function (req, res) {
 
 router.get("/blogs/:id", requireLogin, async function (req, res) {
   var blog = await query.fetchBlog(req.params.id);
-
+  var findSTS = await query.fetchEmailSTS(blog.title);
+  console.log("Emailer db");
+  console.log(findSTS);
+  if(findSTS.STS){
+    blog .status="Email Already Send :)";
+  }else{
+    blog .status="Email not Send :(";
+  }
   res.render("admin/viewBlog", {
     blog: blog,
   });
@@ -989,6 +1221,63 @@ router.put(
   }
 );
 
+router.post("/blogs/:id/sendMAil", requireLogin,async function (req, res) {
+  console.log("Send Mail");
+  let batchSize=200;
+  let cnt =0 ;
+  var emailList=[];
+  let dev= await query.fetchBlog(req.params.id);
+  console.log(dev);
+  var findSTS = await query.fetchEmailSTS(dev.title);
+  console.log("Emailer db");
+  console.log(findSTS);
+
+  var valfind = await query.fetchAllEmailers();
+  
+  var EmailStatus;
+  //for loop to attach 200 emailers in bbc
+  let x = valfind.length;
+  var subject ="KVAR Tech's Blogs:"+ dev.title;
+  var hyperlink="https://kvartech.in/blogs/"+req.params.id;
+  var imagePath="https://kvartech.in/public/blogs/"+dev.image.filename;
+  var title ="Blogs"
+  let tpp=0;
+  if(x<200){
+      tpp=x;
+    }else{
+      tpp=200;
+    }
+  for(let i=0;i<x ;i=i+tpp){
+    //batchIndex,batchSize,emailIds
+    let tp=0;
+    if(x<200){
+      tp=x;
+    }else{
+      tp=200;
+    }
+    for(let j=0;j<tp;j++){
+      emailList.push(valfind[j].Email);
+    }
+    console.log(emailList);
+    let emailIds =  getNextBatch(cnt,batchSize,emailList);
+    SendHtmlMail(emailIds,subject,dev.title,imagePath,dev.description[0].substr(0,180),hyperlink,title);
+    cnt++;
+    emailList.splice(0, 200);
+  }
+  findSTS.STS=true;
+  if(findSTS.STS){
+    dev.status="Email Already Send :)";
+  }else{
+    dev.status="Email not Send :(";
+  }
+  temp = await query.updateEmailSTS(findSTS);
+  res.render("admin/viewBlog", {
+    updateRequest: false, 
+    blog: dev,
+  });
+  
+});
+
 router.delete("/blogs/:id/delete", requireLogin, async function (req, res) {
   var val = await query.deleteBlog(req.params.id);
   res.redirect("../../blogs");
@@ -1005,7 +1294,44 @@ router.delete("/blogs/:id/delete", requireLogin, async function (req, res) {
   }
 });
 
+
 //---end blops
+function getNextBatch(batchIndex,batchSize,emailIds) {
+  const startIndex = batchIndex * batchSize;
+  const endIndex = startIndex + batchSize;
+  const batch = emailIds.slice(startIndex, endIndex);
+  return batch;
+}
+
+function StringConcat(string1,string2){
+    var s = string1;
+    s = s + string2;
+    return s;
+}
+
+async function SendHtmlMail(To,SUB,tittle,Path,Desc,Link,title2){
+    var content = fs.readFileSync("index.html","utf-8"); //read the email template of new devlopements file
+    const template = Handlebars.compile(content);
+    const data = { NewDev: tittle, imagePath:Path,description:Desc,link:Link,title:title2};
+    const output = template(data);
+    //get mail id only of those who are Subscribe
+    var mailOptions2 = {
+      from: process.env.KVAR_FROM,
+      to: 'sales@kvartech.com',
+      subject: SUB,
+      bcc: To,
+      html: output,
+    };
+    transporter.sendMail(mailOptions2, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent:");
+      }
+    });
+    
+}
+
 function convert_to_object(str) {
   var x = str.trim().split(/\n/); //First trim spaces from start and end then split each line
   var j = [];

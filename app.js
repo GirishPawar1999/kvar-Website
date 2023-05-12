@@ -3,6 +3,7 @@ bodyParser = require("body-parser");
 methodOverride = require("method-override");
 expressSession = require("express-session");
 adminRoutes = require("./routes/admin");
+const Handlebars = require('handlebars');
 app = express();
 query = require("./DBqueries");
 constant = require("./constant");
@@ -449,13 +450,7 @@ app.post("/sendEmail2", async function (request, response) {
         "\n\n" +
         "Job Seeker's message: " +
         request.body.message,
-      attachments: [  
-        {   
-            filename: file.originalname,
-            content: request.file.buffer,
-            contentType: request.file.mimetype ,  
-        }   
-        ] 
+      
     };
     transporter.sendMail(mailOptions, function (error, info) {
       if (error) {
@@ -471,7 +466,33 @@ app.post("/sendEmail2", async function (request, response) {
   }
 });
 
+app.get("/unsubscribe", async function (req, res) {
+  
+  const data ={};
+  data.sts="Your email address would be removed from the mailing list within 3 hrs.";
+  res.render("unsubscribe.pug", {
+   data:data, 
+  });
+}); 
+
+app.post("/unsubscribe", async function (req, res) {
+
+  var reason = req;
+  console.log(req.body)
+  var emailId = req.body.email;
+  console.log("Reason: "+reason);
+  console.log("Email: "+emailId);
+  const data ={};
+  data.sts="U have been successfully removed :("
+  res.render("unsubscribe.pug", {
+    data:data,
+  });
+});
+
+
+
 app.post("/sendEmail3", async function (request, response) {
+    const DevEmail={};
     var mailOptions = {
       from: process.env.KVAR_FROM,
       to: process.env.KVAR_TO,
@@ -497,12 +518,18 @@ app.post("/sendEmail3", async function (request, response) {
         console.log("Email sent: " + info.response);
       }
     });
-    response.status(200).send("Email Send. We will contact u soon :)");
+
+    DevEmail.CompanyName=request.body.CompanyName;
+    DevEmail.Email=request.body.email;
+    DevEmail.Contact=request.body.name;
+    DevEmail.Subscribe="y";
+
+    temp = await query.addEmailers(DevEmail);
     var mailOptions2 = {
       from: process.env.KVAR_FROM,
       to: request.body.email,
       subject: 'Thanks for Subscribing to KVAR New Development',
-      text: 'Thanks for Subscribing to KVAR New Development. For more updates Stay tuned :)'
+      
     };
     transporter.sendMail(mailOptions2, function (error, info) {
       if (error) {
@@ -514,6 +541,7 @@ app.post("/sendEmail3", async function (request, response) {
     response.status(200).send("Email Send. We will contact u soon :)");
   
 });
+//Unsubscribe
 
 app.get("*", function (req, res) {
   res.render("404");

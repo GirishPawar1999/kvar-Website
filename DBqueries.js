@@ -863,6 +863,112 @@ module.exports = {
       return [x, Dev];
     }
   },
+  //Emailers
+  addEmailers: async function addEmailers(Emailers) {
+    console.log("Emailers:");
+    console.log(Emailers);
+    let res = null;
+    try {
+      await client.connect();
+      res = await client.db("kvar").collection("Emailers").insertMany(Emailers);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      await client.close();
+      console.log(res);
+      return Emailers._id;
+    }
+  },
+  findEmailers: async function findEmailers() {
+    let Emailers = null;
+    try {
+      await client.connect();
+
+      let res = await client
+        .db("kvar")
+        .collection("Emailers")
+        .find()
+      Emailers = res;
+    } catch (err) {
+      console.log(err);
+    } finally {
+      await client.close();
+      return Emailers;
+    }
+  },
+  fetchAllEmailers: async function fetchAllEmailers() {
+    let Emailers = null;
+    try {
+      await client.connect();
+
+      let res = await client
+        .db("kvar")
+        .collection("Emailers")
+        .find({Subscribe: 'y'})
+        .toArray();
+      Emailers = res;
+    } catch (err) {
+      console.log(err);
+    } finally {
+      await client.close();
+      return Emailers;
+    }
+  },
+  //Email Status
+  addEmailerSTS: async function addEmailerSTS(Emailers) {
+    console.log("Emailers:");
+    console.log(Emailers);
+    let res = null;
+    try {
+      await client.connect();
+      res = await client.db("kvar").collection("statusEmail").insertOne(Emailers);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      await client.close();
+      console.log(res);
+      return Emailers._id;
+    }
+  },
+  fetchEmailSTS: async function fetchEmailSTS(id) {
+    var result = null;
+    try {
+      await client.connect();
+      result = await client.db("kvar").collection("statusEmail").findOne({ title: id });
+      console.log(result);
+    } catch (e) {
+      console.log(e);
+      result = null;
+    } finally {
+      await client.close();
+      return result;
+    }
+  },
+  updateEmailSTS: async function updateEmailSTS(Dev) {
+    var val = true;
+
+    try {
+      await client.connect();
+      result = await client
+        .db("kvar")
+        .collection("statusEmail")
+        .findOneAndUpdate(
+          { title: Dev.title },
+          {
+            $set: {
+              title: Dev.title,
+              STS: Dev.STS,
+            },
+          }
+        );
+    } catch (e) {
+      console.log(e);
+      val = false;
+    } finally {
+      await client.close();
+      return val;
+    }
+  },
   //==job
   addCareers: async function addCareers(Careers) {
     let res = null;
@@ -878,6 +984,7 @@ module.exports = {
       return Careers._id;
     }
   },
+  
   fetchAllCareers: async function fetchAllCareers() {
     let Careers = null;
     try {

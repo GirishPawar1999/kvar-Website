@@ -1,0 +1,15 @@
+extends ./header.pug
+block append head 
+  link(href='/public/css/addProduct.css', rel='stylesheet')
+block content
+    form(action = link, enctype="multipart/form-data" method = "POST" id="product" style="padding:10px; margin:5px; text-align:center;")
+      label(for ="EmailerDb") Upload 
+        = type
+      input(type = "file" name="EmailerDb" required multiple) 
+      br
+      br
+      button(class="btn btn-primary" type = "submit") Add 
+        = type
+      p Note : * Only Csv Format
+        
+      
