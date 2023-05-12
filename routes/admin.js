@@ -823,7 +823,7 @@ router.post("/viewDev/:id/sendMAil", requireLogin,async function (req, res) {
   let x = valfind.length;
   var subject ="KVAR Tech's New Development:"+ dev.title;
   var hyperlink="https://kvartech.in/NewDev/"+req.params.id;
-  var imagePath="https://kvartech.in/public/Dev/"+dev.image.filename;
+  var imagePath="https://kvartech.in/public/Dev/"+dev.image[0].filename;
   var title ="New Development"
   let tpp=0;
   if(x<200){
@@ -1239,7 +1239,8 @@ router.post("/blogs/:id/sendMAil", requireLogin,async function (req, res) {
   let x = valfind.length;
   var subject ="KVAR Tech's Blogs:"+ dev.title;
   var hyperlink="https://kvartech.in/blogs/"+req.params.id;
-  var imagePath="https://kvartech.in/public/blogs/"+dev.image.filename;
+  var imagePath="https://kvartech.in/public/blogs/"+dev.image[0].filename;
+  console.log(dev.image[0].filename);
   var title ="Blogs"
   let tpp=0;
   if(x<200){
