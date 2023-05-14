@@ -1,0 +1,51 @@
+extends ./header.pug
+block append head 
+  link(href='/public/css/addProduct.css', rel='stylesheet')
+  link(rel='stylesheet' href='/froalacss')
+  script(src='/froalajs')
+block content
+  .container-fluid
+    
+    form(action = "/admin/addCmail", enctype="multipart/form-data" method = "POST" id="product")
+     div(style="padding:50px;")
+      h2 Send Creative Mail
+      br
+      label
+      input(type='radio', name='option', value='input')
+      |  Custom Mail List &nbsp; &nbsp;&nbsp;&nbsp;
+      
+      input(type='radio', name='option', value='DataBase')
+      |  Emailer's DataBase
+      label
+      
+
+      div.form-group
+         label(for = "To") To
+         input(class ="form-control" name = "blog[To]")
+      
+      div.form-group
+         label(for = "Subject") Subject
+         textarea(class ="form-control" name = "blog[Subject]" placeholder="example: \n warranty=1 year \n brand=kvartech \n x=y" required)
+      br
+      textarea#example(name='editdata')
+      br
+      br
+      br
+      script.
+         var editor = new FroalaEditor("#example",{
+         // Set the image upload URL.
+         imageUploadURL: '/admin/upload_image'
+         
+        });
+      
+      button(class="btn btn-primary" type = "submit") Send
+      br
+      
+      br
+      p 
+        = "Email Status: " + blog.status  
+    if insertRequest 
+      if queryPassed
+         p Product Inserted Successfully
+      else 
+         p There is some error in inserting this product, Please try again

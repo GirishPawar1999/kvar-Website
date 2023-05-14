@@ -914,6 +914,24 @@ module.exports = {
       return Emailers;
     }
   },
+  fetchAllEmails: async function fetchAllEmails() {
+    let Emailers = null;
+    try {
+      await client.connect();
+
+      let res = await client
+        .db("kvar")
+        .collection("Emailers")
+        .find()
+        .toArray();
+      Emailers = res;
+    } catch (err) {
+      console.log(err);
+    } finally {
+      await client.close();
+      return Emailers;
+    }
+  },
   //Email Status
   addEmailerSTS: async function addEmailerSTS(Emailers) {
     console.log("Emailers:");

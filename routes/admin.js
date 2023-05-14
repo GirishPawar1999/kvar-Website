@@ -18,6 +18,7 @@ transporter = nodemailer.createTransport({
 });
 const { parse } = require("csv-parse");
 
+var FroalaEditor = require('../node_modules/wysiwyg-editor-node-sdk/lib/froalaEditor.js');
 
 storage = multer.diskStorage({
   destination: function (req, file, callback) {
@@ -116,6 +117,18 @@ storage8 = multer.diskStorage({
     );
   },
 });
+
+storage9 = multer.diskStorage({
+  destination: function (req, file, callback) {
+    callback(null, "./public/EmailImage");
+  },
+  filename: function (req, file, callback) {
+    callback(
+      null,
+      file.fieldname + "-" + Date.now() + path.extname(file.originalname)
+    );
+  },
+});
 upload = multer({ storage: storage });
 upload1 = multer({ storage: storage1 });
 upload2 = multer({ storage: storage2 });
@@ -125,6 +138,7 @@ upload5 = multer({ storage: storage5 });
 upload6 = multer({ storage: storage6 });
 upload7 = multer({ storage: storage7 });
 upload8 = multer({ storage: storage8 });
+upload9 = multer({ storage: storage9 });
 bcrypt = require("bcrypt");
 query = require("../DBqueries");
 constant = require("../constant");
@@ -133,6 +147,7 @@ const EmailersDir = path.join(__dirname, "../public/EmailersDb");
 const directoryPath = path.join(__dirname, "../public/brochures");
 const galleryPathImages = path.join(__dirname, "../public/gallery/imgs");
 const galleryPathVideos = path.join(__dirname, "../public/gallery/vids");
+const CmailPathImages = path.join(__dirname, "../public/EmailImage");
 
 const requireLogin = (req, res, next) => {
   if (!req.session.user_id) return res.redirect("/admin/login");
@@ -881,6 +896,127 @@ router.delete("/viewDev/:id/delete", requireLogin,async function (req, res) {
 });
 //===
 //===testimonials
+//--Creative Email Sending
+function replaceImageTagsWithText(str) {
+  // Create a regular expression to match image tags
+  var regex = /<img src="/g;
+
+  // Replace each image tag with the specified text
+  var replacedStr = str.replace(regex, '<img src="https://kvartech.in'); 
+
+  // Return the modified string
+  return replacedStr;
+}
+
+router.get("/addCmail",  requireLogin,async function (req, res) {
+  let Careers={};
+  Careers.status= "";
+  res.render("admin/addCmail", {
+    insertRequest: false,
+    blog: Careers,
+  });
+});
+
+router.get("/Cmail", requireLogin, function (req, res) {
+  fs.readdir(CmailPathImages, function (err, files) {
+    //handling error
+    let images = [];
+    if (err) {
+      return console.log("Unable to scan directory: " + err);
+    }
+    //listing all files using forEach
+    files.forEach(function (file) {
+      // Do whatever you want to do with the file
+      images.push(file);
+    });
+    res.render("admin/Cmail", {
+      images: images,
+    });
+  });
+});
+
+
+
+router.delete("/Cmail/:name/delete", requireLogin, function (req, res) {
+  fs.unlink("public/EmailImage/" + req.params.name, (err) => {
+    if (err) {
+      console.error(err);
+    }
+    res.send("Deleted");
+  });
+});
+
+router.post("/addCmail", requireLogin,upload9.array("image"),async function(req,res){
+  let Careers = req.body.blog;
+  console.log(req.body.blog.To);
+  console.log(req.body.blog.Subject);
+
+  let emailIds ;
+  var emailList=[];
+  let batchSize=200;
+  let cnt =0 ;
+  var HTML;
+  var SUB  = req.body.blog.Subject;
+  var HTML = '<html><head></head><body>';
+  HTML += req.body.editdata;
+  HTML+="</body></html>"
+  if(req.body.option == 'DataBase'){
+
+    console.log("Database extraction");
+    var valfind = await query.fetchAllEmails();
+  
+    var EmailStatus;
+    
+    //for loop to attach 200 emailers in bbc
+    let x = valfind.length;
+    let tpp=0;
+    if(x<200){
+        tpp=x;
+      }else{
+        tpp=200;
+      }
+    for(let i=0;i<x ;i=i+tpp){
+      //batchIndex,batchSize,emailIds
+      let tp=0;
+      if(x<200){
+        tp=x;
+      }else{
+        tp=200;
+      }
+      for(let j=0;j<tp;j++){
+        emailList.push(valfind[j].Email);
+      }
+      console.log(emailList);
+      emailIds =  getNextBatch(cnt,batchSize,emailList);
+      SendCustomHtmlMail(emailIds,SUB,HTML);
+      console.log();
+      emailList.splice(0, 200);
+    }
+  }else{
+    console.log("cutom");
+    var TO   = req.body.blog.To;
+    console.log(TO);
+    SendCustomHtmlMail(TO,SUB,HTML);
+  }
+  Careers.status= "Mail Send :)";
+  res.render("admin/addCmail", {
+    blog: Careers,
+  });
+  
+});
+
+router.post("/upload_image", requireLogin,async function(req,res){
+   // Store image
+  FroalaEditor.Image.upload(req, '/public/EmailImage/', function(err, data) {
+      // Return data.
+    if (err) {
+      return res.send(JSON.stringify(err));
+    }
+    res.send(data);
+  });
+});
+
+
 //===careers
 
 router.get("/addCareers",  requireLogin, async function (req, res) {
@@ -1324,6 +1460,28 @@ async function SendHtmlMail(To,SUB,tittle,Path,Desc,Link,title2){
       html: output,
     };
     transporter.sendMail(mailOptions2, function (error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email sent:");
+      }
+    });
+    
+}
+
+
+
+async function SendCustomHtmlMail(To,SUB,HTML){
+    
+    //get mail id only of those who are Subscribe
+    var mailOptions5 = {
+      from: process.env.KVAR_FROM,
+      to: 'sales@kvartech.com',
+      subject: SUB,
+      bcc: To,
+      html: HTML,
+    };
+    transporter.sendMail(mailOptions5, function (error, info) {
       if (error) {
         console.log(error);
       } else {

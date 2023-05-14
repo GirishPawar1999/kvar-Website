@@ -19,6 +19,7 @@
     "dotenv": "^16.0.1",
     "express": "^4.17.1",
     "express-session": "^1.17.2",
+    "froala-editor": "^4.0.18",
     "handlebars": "^4.7.7",
     "method-override": "^3.0.0",
     "moment": "^2.29.4",
@@ -30,6 +31,7 @@
     "passport": "^0.5.2",
     "passport-local": "^1.0.0",
     "pug": "^3.0.2",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "wysiwyg-editor-node-sdk": "^4.0.18"
   }
 }

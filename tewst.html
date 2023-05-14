@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Choose Input Box or Upload File</title>
+</head>
+
+<body>
+    <label>
+        <input type="radio" name="option" value="input" onclick="showInputBox()"> Input Box
+    </label>
+    <label>
+        <input type="radio" name="option" value="file" onclick="showFileUpload()"> File
+    </label>
+    <br>
+    <div id="input-box">
+        <input type="text" id="input" name="input">
+    </div>
+    <div id="file-upload" style="display:none">
+        <input type="file" id="file">
+    </div>
+    <script>
+        function showInputBox() {
+            document.getElementById('input-box').style.display = 'block';
+            document.getElementById('file-upload').style.display = 'none';
+        }
+
+        function showFileUpload() {
+            document.getElementById('file-upload').style.display = 'block';
+            document.getElementById('input-box').style.display = 'none';
+        }
+    </script>
+</body>
+
+</html>

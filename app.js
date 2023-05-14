@@ -15,6 +15,8 @@ transporter = nodemailer.createTransport({
     pass: process.env.PASS,
   },
 });
+
+
 directoryPath = path.join(__dirname, "./public/brochures");
 galleryPathImages = path.join(__dirname, "./public/gallery/imgs");
 galleryPathVideos = path.join(__dirname, "./public/gallery/vids");
@@ -46,11 +48,17 @@ app.set("views", "./views");
 app.use("/public/", express.static(__dirname + "/public"));
 
 app.set("view engine", "pug");
+
+app.use('/froalacss',express.static(__dirname+'/node_modules/froala-editor/css/froala_editor.pkgd.min.css'));
+app.use('/froalajs',express.static(__dirname+'/node_modules/froala-editor/js/froala_editor.pkgd.min.js'));
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(
   expressSession({ secret: "secret", resave: false, saveUninitialized: true })
 );
+
+
 app.use("/admin", adminRoutes);
 
 const PORT = process.env.PORT || 3000;
@@ -466,6 +474,7 @@ app.post("/sendEmail2", async function (request, response) {
   }
 });
 
+//Unsubscribe
 app.get("/unsubscribe", async function (req, res) {
   
   const data ={};
