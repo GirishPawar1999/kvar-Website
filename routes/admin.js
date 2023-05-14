@@ -937,6 +937,7 @@ router.get("/Cmail", requireLogin, function (req, res) {
 
 
 
+
 router.delete("/Cmail/:name/delete", requireLogin, function (req, res) {
   fs.unlink("public/EmailImage/" + req.params.name, (err) => {
     if (err) {
