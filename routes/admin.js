@@ -929,7 +929,7 @@ router.get("/Cmail", requireLogin, function (req, res) {
       // Do whatever you want to do with the file
       images.push(file);
     });
-    res.render("admin/Cmail", {
+    res.render("admin/cmail", {
       images: images,
     });
   });
