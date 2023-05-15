@@ -961,6 +961,7 @@ router.post("/addCmail", requireLogin,upload9.array("image"),async function(req,
   var HTML = '<html><head></head><body>';
   HTML += req.body.editdata;
   HTML+="</body></html>"
+  var HTML_CONT = replaceImageTagsWithText(HTML);
   if(req.body.option == 'DataBase'){
 
     console.log("Database extraction");
@@ -989,7 +990,7 @@ router.post("/addCmail", requireLogin,upload9.array("image"),async function(req,
       }
       console.log(emailList);
       emailIds =  getNextBatch(cnt,batchSize,emailList);
-      SendCustomHtmlMail(emailIds,SUB,HTML);
+      SendCustomHtmlMail(emailIds,SUB,HTML_CONT);
       console.log();
       emailList.splice(0, 200);
     }
