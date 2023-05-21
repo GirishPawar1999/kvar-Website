@@ -896,6 +896,30 @@ module.exports = {
       return Emailers;
     }
   },
+  unsubscribe: async function unsubscribe(email) {
+    var val = true;
+
+    try {
+      await client.connect();
+      result = await client
+        .db("kvar")
+        .collection("Emailers")
+        .findOneAndUpdate(
+          { Email: email },
+          {
+            $set: {
+              Subscribe: 'n',
+            },
+          }
+        );
+    } catch (e) {
+      console.log(e);
+      val = false;
+    } finally {
+      await client.close();
+      return val;
+    }
+  },
   fetchAllEmailers: async function fetchAllEmailers() {
     let Emailers = null;
     try {
@@ -985,6 +1009,20 @@ module.exports = {
     } finally {
       await client.close();
       return val;
+    }
+  },
+  addEmailSTS: async function addEmailSTS(Careers) {
+    let res = null;
+    try {
+      await client.connect();
+
+      res = await client.db("kvar").collection("statusEmail").insertOne(Careers);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      await client.close();
+      console.log(res);
+      return Careers._id;
     }
   },
   //==job

@@ -908,6 +908,25 @@ function replaceImageTagsWithText(str) {
   return replacedStr;
 }
 
+router.get("/addEmailsts", async function (req, res) {
+  console.log("OK");
+  // find no of new dev
+  const valfind = await query.fetchAllDev();
+  let len =valfind.length;
+  for(let i=0;i<len;i++){
+    var valfind2 = await query.fetchEmailSTS(valfind[i].title);
+    if(valfind2==null){
+      console.log("not present");
+      const temp={
+        title:valfind[i].title,
+        STS:false
+      }
+      var valfind3 = await query.addEmailSTS(temp);
+    }
+  }
+  res.send("OK");
+});
+
 router.get("/addCmail",  requireLogin,async function (req, res) {
   let Careers={};
   Careers.status= "";

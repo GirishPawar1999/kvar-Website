@@ -5,7 +5,13 @@ block append head
   script(src='/froalajs')
 block content
   .container-fluid
-    
+    br
+    form(action = "/admin/Cmail" enctype="multipart/form-data" method = "GET")
+            button(type="submit") Reference Uploaded Image
+    br
+    form(action = "/admin/addEmailsts" enctype="multipart/form-data" method = "GET")
+            button(type="submit") Add STS
+    br
     form(action = "/admin/addCmail", enctype="multipart/form-data" method = "POST" id="product")
      div(style="padding:50px;")
       h2 Send Creative Mail

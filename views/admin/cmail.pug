@@ -7,16 +7,25 @@ block content
     br
     br
     h2 Creative Mail Database
+    br
+    form
+      input(type='button' value='Go back!' onclick='history.back()')
+    
+    br
     if images != null 
       table.table.table-hover
         tr 
             th Image
+            th Image URL
             th Delete Image
         each image in images
             tr 
                 td 
                     div(class="img-thumb")
                         img(src="/public/EmailImage/"+image)
+                td 
+                    p
+                        = "https://kvartech.in/"+image
                 td 
                     form(action = 'Cmail/'+image+'/delete?_method=DELETE' enctype="multipart/form-data" method = "POST")
                         button(type="submit") Delete Image

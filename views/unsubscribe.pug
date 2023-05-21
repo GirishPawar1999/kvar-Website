@@ -107,7 +107,7 @@ html(lang='en-us')
     section
       .max-width.text-center
         #email-container.email-container
-         form(action = "/unsubscribe", enctype="multipart/form-data" method = "POST")
+         form(action = "/unsubscribe", enctype="Content-Type: application/json" method = "POST")
           center
             img.pc-img(src='https://kvartech.in/public/assets/img/KVAR_Website_Logo-07%20(1)-min.png', width='20%', height='10%', alt='https://kvartech.in/')
             .email-body

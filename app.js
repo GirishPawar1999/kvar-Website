@@ -484,13 +484,14 @@ app.get("/unsubscribe", async function (req, res) {
   });
 }); 
 
-app.post("/unsubscribe", async function (req, res) {
 
-  var reason = req;
-  console.log(req.body)
+app.post("/unsubscribe",async function (req, res) {
+
   var emailId = req.body.email;
+  var reason = req.body.reason;
   console.log("Reason: "+reason);
   console.log("Email: "+emailId);
+  temp = await query.unsubscribe(emailId); 
   const data ={};
   data.sts="U have been successfully removed :("
   res.render("unsubscribe.pug", {
