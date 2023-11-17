@@ -29,6 +29,15 @@ head
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
     gtag('config', 'AW-11395302120');
+  
+  // Google Tag Manager
+  script.
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-WHL7M272');
+  // End Google Tag Manager
   //
     =======================================================
     * Template Name: FlexStart - v1.9.0
@@ -88,6 +97,11 @@ header#header.header.fixed-top
         a(href='https://www.youtube.com/channel/UCMR4emvau2a3BcWarm6IMcw', target='_blank')
           i(class="fa fa-youtube")
       i.bi.bi-list.mobile-nav-toggle
+      
+// Google Tag Manager (noscript)
+noscript
+  iframe(src='https://www.googletagmanager.com/ns.html?id=GTM-WHL7M272' height='0' width='0' style='display:none;visibility:hidden')
+// End Google Tag Manager (noscript)
 script.
   var nav = !{JSON.stringify(nav)};
   nav = nav-1;
