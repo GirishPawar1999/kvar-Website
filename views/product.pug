@@ -16,6 +16,68 @@ block content
   margin-top:15px;
   }
   }
+
+block content 
+ style. 
+  .button {
+  display: inline;
+  padding: 0.75rem 1.25rem;
+  border-radius: 10rem;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 1rem;
+  letter-spacing: 0.15rem;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  }
+  .button:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #012970;
+  border-radius: 10rem;
+  z-index: -2;
+  }
+  .button:before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background-color: #008fb3;
+  transition: all 0.3s;
+  border-radius: 10rem;
+  z-index: -1;
+  }
+  .button:hover {
+  color: #fff;
+  }
+  .button:hover:before {
+  width: 100%;
+  }
+  /* optional reset for presentation */
+  * {
+  text-decoration: none;
+  }
+  .container {
+  margin: 0 auto;
+  
+  width: 100%;  
+  }
+  h1 {
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+  color: #777;
+  }
+
+
+
   /* ============ mobile view .end// ============ */
  main#main
   // ======= Breadcrumbs =======
@@ -31,6 +93,7 @@ block content
   // End Breadcrumbs
   // ======= Portfolio Details Section =======
   //===send mail form
+    
   form(action = "/products/"+product._id, enctype="multipart/form-data" method = "POST")
    section#portfolio-details.portfolio-details
      .container
@@ -49,7 +112,10 @@ block content
                  button.btn
                    a(href="/public/brochures/"+product.brochure download)
                      i.fa.fa-download
-                     |  Download Brochure
+                     |  Download Brochure  &nbsp;
+                   a.button(href='/contact') 
+                     i.fa.fa-pencil-square-o
+                     |  Get a Quote&nbsp;                   
              p
                 = product.description
          table
@@ -132,6 +198,78 @@ block content
   content: attr(data-column);
   color: #000;
   font-weight: bold;
+  }
+  $color: #0cf;
+  .button {
+  display: inline-block;
+  padding: .75rem 1.25rem;
+  border-radius: 10rem;
+  color: #fff;
+  text-transform: uppercase;
+  font-size: 1rem;
+  letter-spacing: .15rem;
+  transition: all .3s;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  &:after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $color;
+  border-radius: 10rem;
+  z-index: -2;
+  }
+  &:before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  background-color: darken($color, 15%);
+  transition: all .3s;
+  border-radius: 10rem;
+  z-index: -1;
+  }
+  &:hover {
+  color: #fff;
+  &:before {
+  width: 100%;
+  }
+  }
+  }
+  /* optional reset for presentation */
+  * {
+  font-family: Arial;
+  text-decoration: none;
+  font-size: 20px;
+  }
+  .container {
+  padding-top: 50px;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+  }
+  h1 {
+  text-transform: uppercase;
+  font-size: .8rem;
+  margin-bottom: 2rem;
+  color: #777;
+  }
+  span {
+  display: block;
+  margin-top: 2rem;
+  font-size: .7rem;
+  color: #777;
+  a {
+  font-size: .7rem;
+  color: #999;
+  text-decoration: underline;
+  }
   }
   
   
